@@ -27,13 +27,9 @@ else
     				echo "No draft name given for post"
     			else
     				if [ -f "drafts/$2.md" ]; then
-    					POST_NAME="_posts/${CURRENT_DATE}-$2.html"
-    					if [ -f ${POST_NAME} ]; then 
-    						echo "post ${POST_NAME} already exists"
-    					else 
-							cat drafts/$2.md > ${POST_NAME}
-							echo "post created: ${POST_NAME}" 
-						fi
+    					POST_NAME="_posts/${CURRENT_DATE}-$2.html" 
+						cat drafts/$2.md > ${POST_NAME}
+						echo "post created: ${POST_NAME}" 
     				else
     					echo "No draft named drafts/$2.md found"
     				fi
