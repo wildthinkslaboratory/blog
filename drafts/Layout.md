@@ -56,7 +56,7 @@ let df = function(x) { return 2*x; }
 let x = board0.create('glider', [2,0, xaxis], {name:'x', size:6});
 let fx = board0.create('point', [
   function() { return x.X(); }, 
-  function() { return f(x.X()); }], {name:'', color:'blue', fixed:true});
+  function() { return f(x.X()); }], {name:'', color:'#222299', fixed:true});
 let graph_f = board0.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
 let graph_df = board0.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:false});
 let dfx = board0.create('point', [
@@ -67,7 +67,7 @@ let dfx = board0.create('point', [
 let tangent = board0.create('line', [
   function() { return f(x.X());},
   function() { return - df(x.X());},
-  1], {visible:true});
+  1], {color:'#222299', visible:true});
 let tangentSlopeText = board0.create('text',[
   function() { return x.X() + 0.5; },
   function() { return f(x.X()) + 0.5;},
@@ -78,7 +78,16 @@ let tangentSlopeText = board0.create('text',[
 // the slider point for the secant
 let x_h = board0.create('glider', [x.X() + 3, 0, xaxis], {name:'x + h', size:6, color:'green', visible:false} ); 
 
+let highlightFon = function() {
+  graph_f.setAttribute({strokeColor:'#33FFFF', strokeWidth:3});
+};
 
+let highlightFoff = function() {
+  graph_f.setAttribute({strokeColor:'#999999', strokeWidth:1});
+};
+
+window.highlightFoff = highlightFoff;
+window.highlightFon = highlightFon;
 
 this.sizeChanged = function() {      
   board0.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
@@ -116,6 +125,14 @@ smartdown.importCssCode(
   font-size: 18px;
 }
 
+.highlightOn {
+  background-color: #33FFFF;
+}
+
+.highlightOff {
+  background-color: #CCCCCC;
+}
+
 @media (min-width: 800px) {
   .outer {
    
@@ -147,6 +164,23 @@ right.classList.remove('decoration-outlinebox');
 outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
+
+const math1 = document.getElementById('MathJax-Element-1-Frame');
+math1.onmouseover = logMouseOver;
+math1.onmouseout = logMouseOut;
+math1.classList.add('highlightOff');
+
+function logMouseOver() {
+  math1.classList.add('highlightOn');
+  math1.classList.remove('highlightOff');
+  highlightFon();
+}
+
+function logMouseOut() {
+  math1.classList.add('highlightOff');
+  math1.classList.remove('highlightOn');
+  highlightFoff();
+}
 
 ```
 
@@ -194,7 +228,7 @@ let df = function(x) { return 2*x; };
 let x = board1.create('glider', [1,0, xaxis], {name:'x', size:6});
 let fx = board1.create('point', [
   function() { return x.X(); }, 
-  function() { return f(x.X()); }], {name:'', color:'blue', fixed:true});
+  function() { return f(x.X()); }], {name:'', color:'#222299', fixed:true});
 let graph_f = board1.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
 let graph_df = board1.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:false});
 let dfx = board1.create('point', [
@@ -210,9 +244,9 @@ let x_h = board1.create('glider', [x.X() + 2, 0, xaxis], {name:'x + h', size:6, 
 let fx_h = board1.create('point', [
                 function() { return x_h.X(); }, 
                 function() { return f(x_h.X()); }
-          ], {name:'', color: 'blue', fixed: true, size:3, visible:true});
+          ], {name:'', color:'#222299', fixed: true, size:3, visible:true});
 
-let secant = board1.create('line', [fx, fx_h], {strokeColor:'blue', visible:true});
+let secant = board1.create('line', [fx, fx_h], {color:'#222299', visible:true});
 let secantSlope = function() { 
   if (x.X() == x_h.X()) { return "UNDEFINED: divide by zero"; }
   return ((f(x.X()) - f(x_h.X()))/(x.X() - x_h.X())).toFixed(3).toString(); 
@@ -330,7 +364,7 @@ let df = function(x) { return 2*x; };
 let x = board2.create('glider', [1,0, xaxis], {name:'x', size:6});
 let fx = board2.create('point', [
   function() { return x.X(); }, 
-  function() { return f(x.X()); }], {name:'', color:'blue', fixed:true});
+  function() { return f(x.X()); }], {name:'', color:'#222299', fixed:true});
 let graph_f = board2.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
 let graph_df = board2.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:false});
 let dfx = board2.create('point', [
@@ -346,9 +380,9 @@ let x_h = board2.create('glider', [x.X() + 2, 0, xaxis], {name:'x + h', size:6, 
 let fx_h = board2.create('point', [
                 function() { return x_h.X(); }, 
                 function() { return f(x_h.X()); }
-          ], {name:'', color: 'blue', fixed: true, size:3, visible:true});
+          ], {name:'', color:'#222299', fixed: true, size:3, visible:true});
 
-let secant = board2.create('line', [fx, fx_h], {strokeColor:'blue', visible:true});
+let secant = board2.create('line', [fx, fx_h], {color:'#222299', visible:true});
 let secantSlope = function() { 
   if (x.X() == x_h.X()) { return "UNDEFINED: divide by zero"; }
   return ((f(x.X()) - f(x_h.X()))/(x.X() - x_h.X())).toFixed(3).toString(); 
