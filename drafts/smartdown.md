@@ -21,6 +21,17 @@ Easy ways to make your content more interactive.
 
 Web publishing tools. Smartdown, Idyll, p5js d3 graphjsx make building bite sized apps 
 
+### Test Map
+
+```javascript /playable/autoplay
+var myDiv = this.div;
+
+var mymap="https://drive.google.com/open?id=1m4pLLHLjzrSWITSY2TY68_PFcV-1yqo8&usp=sharing"
+
+
+```
+
+
 ### What does the Revolution Look Like? 
 
 
