@@ -166,10 +166,10 @@ myDiv.innerHTML = `<div id='box2' class='jxgbox' style='height:500px'>`;
 
 JXG.Options.axis.ticks.majorHeight = 40;
 // create the board
-board0 = JXG.JSXGraph.initBoard('box2', {boundingbox:[-5,10,5,-3], showCopyright:false, keepaspectratio:false, axis:false});
-board0.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
+board1 = JXG.JSXGraph.initBoard('box2', {boundingbox:[-5,10,5,-3], showCopyright:false, keepaspectratio:false, axis:false});
+board1.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
 
-let xaxis = board0.create('axis', [[0, 0], [1,0]], 
+let xaxis = board1.create('axis', [[0, 0], [1,0]], 
       {name:'x', 
       withLabel: true,
       label: {
@@ -178,7 +178,7 @@ let xaxis = board0.create('axis', [[0, 0], [1,0]],
         offset: [-20, 20]   // (in pixels)
       }
       });
-let yaxis = board0.create('axis', [[0, 0], [0, 1]], 
+let yaxis = board1.create('axis', [[0, 0], [0, 1]], 
       {name:'y', 
       withLabel: true, 
       label: {
@@ -191,51 +191,51 @@ let yaxis = board0.create('axis', [[0, 0], [0, 1]],
 // parabala and it's derivative
 let f = function(x) { return  x*x; };
 let df = function(x) { return 2*x; };
-let x = board0.create('glider', [1,0, xaxis], {name:'x', size:6});
-let fx = board0.create('point', [
+let x = board1.create('glider', [1,0, xaxis], {name:'x', size:6});
+let fx = board1.create('point', [
   function() { return x.X(); }, 
   function() { return f(x.X()); }], {name:'', color:'blue', fixed:true});
-let graph_f = board0.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
-let graph_df = board0.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:false});
-let dfx = board0.create('point', [
+let graph_f = board1.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
+let graph_df = board1.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:false});
+let dfx = board1.create('point', [
   function() { return x.X(); }, 
   function() { return df(x.X()); }], {name:'', color:'#44AA44', fixed:true, visible:false});
 
 
 // Secant line section
 // the slider point for the secant
-let x_h = board0.create('glider', [x.X() + 2, 0, xaxis], {name:'x + h', size:6, color:'green', visible:true} ); 
+let x_h = board1.create('glider', [x.X() + 2, 0, xaxis], {name:'x + h', size:6, color:'green', visible:true} ); 
 
 // sliding point on parabala 
-let fx_h = board0.create('point', [
+let fx_h = board1.create('point', [
                 function() { return x_h.X(); }, 
                 function() { return f(x_h.X()); }
           ], {name:'', color: 'blue', fixed: true, size:3, visible:true});
 
-let secant = board0.create('line', [fx, fx_h], {strokeColor:'blue', visible:true});
+let secant = board1.create('line', [fx, fx_h], {strokeColor:'blue', visible:true});
 let secantSlope = function() { 
   if (x.X() == x_h.X()) { return "UNDEFINED: divide by zero"; }
   return ((f(x.X()) - f(x_h.X()))/(x.X() - x_h.X())).toFixed(3).toString(); 
 }
 
-let secantSlopeText = board0.create('text',[
+let secantSlopeText = board1.create('text',[
   function() { return x.X() + (x_h.X() - x.X())/2 - 1.8; },
   function() { return f(x.X()) + (f(x_h.X()) - f(x.X()))/2;},
   function(){ return 'slope = '+ secantSlope(); }], {fontSize:15, visible:true});
 
-let p = board0.create('point', [ 
+let p = board1.create('point', [ 
   function() { return x_h.X(); }, 
   function() { return f(x.X());}], {visible:false});
 
-let rise = board0.create('line', [fx_h, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
-let run = board0.create('line', [fx, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
-let riseText = board0.create('text', [
+let rise = board1.create('line', [fx_h, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
+let run = board1.create('line', [fx, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
+let riseText = board1.create('text', [
   function() { if (x_h.X() > x.X()) { return x_h.X() + 0.1; } 
          return x_h.X() - 1.5; },
   function() { return (f(x_h.X()) - f(x.X()))/2 + f(x.X()); },
   '(x+h)^2 - x^2'], {fontSize:12, visible:true});
 
-let runText = board0.create('text', [
+let runText = board1.create('text', [
   function() { return x.X() + (x_h.X() - x.X())/2; },
   function() { return f(x.X()) - 0.3; },
   'h'], {fontSize:12, visible:true});
@@ -244,7 +244,7 @@ let runText = board0.create('text', [
 
 
 this.sizeChanged = function() {      
-  board0.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
+  board1.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
 };
 
  
@@ -302,10 +302,10 @@ myDiv.innerHTML = `<div id='box3' class='jxgbox' style='height:500px'>`;
 
 JXG.Options.axis.ticks.majorHeight = 40;
 // create the board
-board0 = JXG.JSXGraph.initBoard('box3', {boundingbox:[-5,10,5,-3], showCopyright:false, keepaspectratio:false, axis:false});
-board0.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
+board2 = JXG.JSXGraph.initBoard('box3', {boundingbox:[-5,10,5,-3], showCopyright:false, keepaspectratio:false, axis:false});
+board2.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
 
-let xaxis = board0.create('axis', [[0, 0], [1,0]], 
+let xaxis = board2.create('axis', [[0, 0], [1,0]], 
       {name:'x', 
       withLabel: true,
       label: {
@@ -314,7 +314,7 @@ let xaxis = board0.create('axis', [[0, 0], [1,0]],
         offset: [-20, 20]   // (in pixels)
       }
       });
-let yaxis = board0.create('axis', [[0, 0], [0, 1]], 
+let yaxis = board2.create('axis', [[0, 0], [0, 1]], 
       {name:'y', 
       withLabel: true, 
       label: {
@@ -327,51 +327,51 @@ let yaxis = board0.create('axis', [[0, 0], [0, 1]],
 // parabala and it's derivative
 let f = function(x) { return  x*x; };
 let df = function(x) { return 2*x; };
-let x = board0.create('glider', [1,0, xaxis], {name:'x', size:6});
-let fx = board0.create('point', [
+let x = board2.create('glider', [1,0, xaxis], {name:'x', size:6});
+let fx = board2.create('point', [
   function() { return x.X(); }, 
   function() { return f(x.X()); }], {name:'', color:'blue', fixed:true});
-let graph_f = board0.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
-let graph_df = board0.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:false});
-let dfx = board0.create('point', [
+let graph_f = board2.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
+let graph_df = board2.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:false});
+let dfx = board2.create('point', [
   function() { return x.X(); }, 
   function() { return df(x.X()); }], {name:'', color:'#44AA44', fixed:true, visible:false});
 
 
 // Secant line section
 // the slider point for the secant
-let x_h = board0.create('glider', [x.X() + 2, 0, xaxis], {name:'x + h', size:6, color:'green', visible:true} ); 
+let x_h = board2.create('glider', [x.X() + 2, 0, xaxis], {name:'x + h', size:6, color:'green', visible:true} ); 
 
 // sliding point on parabala 
-let fx_h = board0.create('point', [
+let fx_h = board2.create('point', [
                 function() { return x_h.X(); }, 
                 function() { return f(x_h.X()); }
           ], {name:'', color: 'blue', fixed: true, size:3, visible:true});
 
-let secant = board0.create('line', [fx, fx_h], {strokeColor:'blue', visible:true});
+let secant = board2.create('line', [fx, fx_h], {strokeColor:'blue', visible:true});
 let secantSlope = function() { 
   if (x.X() == x_h.X()) { return "UNDEFINED: divide by zero"; }
   return ((f(x.X()) - f(x_h.X()))/(x.X() - x_h.X())).toFixed(3).toString(); 
 }
 
-let secantSlopeText = board0.create('text',[
+let secantSlopeText = board2.create('text',[
   function() { return x.X() + (x_h.X() - x.X())/2 - 1.8; },
   function() { return f(x.X()) + (f(x_h.X()) - f(x.X()))/2;},
   function(){ return 'slope = '+ secantSlope(); }], {fontSize:15, visible:true});
 
-let p = board0.create('point', [ 
+let p = board2.create('point', [ 
   function() { return x_h.X(); }, 
   function() { return f(x.X());}], {visible:false});
 
-let rise = board0.create('line', [fx_h, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
-let run = board0.create('line', [fx, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
-let riseText = board0.create('text', [
+let rise = board2.create('line', [fx_h, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
+let run = board2.create('line', [fx, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
+let riseText = board2.create('text', [
   function() { if (x_h.X() > x.X()) { return x_h.X() + 0.1; } 
          return x_h.X() - 1.5; },
   function() { return (f(x_h.X()) - f(x.X()))/2 + f(x.X()); },
   '(x+h)^2 - x^2'], {fontSize:12, visible:true});
 
-let runText = board0.create('text', [
+let runText = board2.create('text', [
   function() { return x.X() + (x_h.X() - x.X())/2; },
   function() { return f(x.X()) - 0.3; },
   'h'], {fontSize:12, visible:true});
@@ -380,7 +380,7 @@ let runText = board0.create('text', [
 
 
 this.sizeChanged = function() {      
-  board0.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
+  board2.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
 };
 
  
