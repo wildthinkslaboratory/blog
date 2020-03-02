@@ -101,7 +101,9 @@ this.sizeChanged = function() {
 #### --outlinebox right1
 
 ### Finding the Derivative
-We want to find a function that tells us the **slope** of the tangent line for the function $f(x)=x^2$. Drag the red dot to see the slope of the tangent line for different values of $x$.
+The derivative of a function $f(x)=x^2$ tells us the **slope** of the tangent line. Drag the red dot to see the slope of the tangent line for different values of $x$.
+
+How do we figure out what the slope is for each value of $x$?
 
 #### --outlinebox
 #### --outlinebox
@@ -139,13 +141,13 @@ smartdown.importCssCode(
   }
 
   .left {
-    width: 58%;
+    width: 50%;
     display: inline-block;
     vertical-align: top;
   }
 
   .right {
-    width: 40%;
+    width: 48%;
     display: inline-block;
     vertical-align: top;
   }
@@ -185,7 +187,7 @@ function logMouseOut() {
 ```
 
 
-
+### Derivatives are Slopes
 #### --outlinebox outer2
 
 #### --outlinebox left2
@@ -225,7 +227,7 @@ let yaxis = board1.create('axis', [[0, 0], [0, 1]],
 // parabala and it's derivative
 let f = function(x) { return  x*x; };
 let df = function(x) { return 2*x; };
-let x = board1.create('glider', [1,0, xaxis], {name:'x', size:6});
+let x = board1.create('glider', [1,0, xaxis], {name:'x', fixed:true, size:6});
 let fx = board1.create('point', [
   function() { return x.X(); }, 
   function() { return f(x.X()); }], {name:'', color:'#222299', fixed:true});
@@ -261,21 +263,52 @@ let p = board1.create('point', [
   function() { return x_h.X(); }, 
   function() { return f(x.X());}], {visible:false});
 
+let triangle = board1.create('polygon', [fx, fx_h, p], {
+  fillColor:'#33FFFF', 
+  fillOpacity: 50,
+  borders: {strokeColor: 'yellow'}, 
+  strokeWidth:3, visible:false});
+
 let rise = board1.create('line', [fx_h, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
 let run = board1.create('line', [fx, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
 let riseText = board1.create('text', [
   function() { if (x_h.X() > x.X()) { return x_h.X() + 0.1; } 
          return x_h.X() - 1.5; },
   function() { return (f(x_h.X()) - f(x.X()))/2 + f(x.X()); },
-  '(x+h)^2 - x^2'], {fontSize:12, visible:true});
+  '(x+h)^2 - x^2'], {fontSize:12, visible:false});
 
 let runText = board1.create('text', [
   function() { return x.X() + (x_h.X() - x.X())/2; },
-  function() { return f(x.X()) - 0.3; },
-  'h'], {fontSize:12, visible:true});
+  function() { return f(x.X()) - 0.1; },
+  'h'], {fontSize:12, visible:false});
 
 
+let triangleOn = function() {
+  triangle.setAttribute({visible:true});
+  riseText.setAttribute({visible:true});
+  runText.setAttribute({visible:true});
+};
 
+let triangleOff = function() {
+  triangle.setAttribute({visible:false});
+  riseText.setAttribute({visible:false});
+  runText.setAttribute({visible:false});
+};
+
+window.triangleOff = triangleOff;
+window.triangleOn  = triangleOn;
+
+let runLimit = function() {
+  x_h.moveTo([x.X(),0],2000);
+}
+
+let resetSecant = function() {
+  x.moveTo([1,0]);
+  x_h.moveTo([3,0]);
+};
+
+window.runLimit = runLimit;
+window.resetSecant = resetSecant;
 
 this.sizeChanged = function() {      
   board1.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
@@ -285,27 +318,35 @@ this.sizeChanged = function() {
 ```
 #### --outlinebox
 
-
 #### --outlinebox right2
-
-### Derivatives are Slopes
-The derivative definition starts with the **slope** of a secant line. See if you can understand why this expression describes the slope by looking at the picture.
+The definition of the derivative starts with the **slope** of a secant line. 
 $$\frac{(x + h)^2 - x^2}{h}$$
-Now we do some algebra.
+
+To find the derivative $f'(x)$, we take the limit of the slope of the secant line as $h$ goes to zero.
+$$f'(x) = \lim_{h \to 0} \frac{(x + h)^2 - x^2}{h}$$
+
+You can investigate what happens when $h$ gets very small by dragging the green dot towards the red dot or by using these buttons. [Send h to zero](:=run=true) [Reset](:=reset=true)
+
+**What happens when $h=0$?**
+- The slope of the secant line is undefined when $h=0$.
+
+**What happens as $h$ gets very close to $0$?**
+- The secant line gets closer and closer to the **tangent** line.  
+- The slope of the secant line gets closer and closer to 2.
+#### --outlinebox
+#### --outlinebox
+
+
+### Solving the Limit 
+To solve the limit and find a function for the derivative we need to do some algebra.
 $$
 \begin{align}
-\frac{(x + h)^2 - x^2}{h} &  & \textrm{expand $(x+h)^2$} \newline 
-\frac{x^2 + 2hx + h^2 - x^2}{h} &  & \textrm{combine like terms}  \newline
-\frac{2hx + h^2}{h}  &  & \textrm{cancel $h$ terms}   \newline
-2x + h &
+f'(x) = \lim_{h \to 0} \frac{(x + h)^2 - x^2}{h} & = \lim_{h \to 0} \frac{x^2 + 2hx + h^2 - x^2}{h}  & \textrm{expand $(x+h)^2$} \newline 
+& = \lim_{h \to 0} \frac{2hx + h^2}{h} & \textrm{combine like terms}  \newline
+& = \lim_{h \to 0} 2x + h & \textrm{cancel $h$ terms}  \newline
+& = 2x  
 \end{align}
 $$
-The expression $2x + h$ represents the **slope** of the secant line for all values of $x$ and $h$.
-
-#### --outlinebox
-#### --outlinebox
-
-
 ```javascript /autoplay
 const outer = document.getElementById('outer2');
 const left = document.getElementById('left2');
@@ -319,6 +360,37 @@ outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
 
+const math4 = document.getElementById('MathJax-Element-4-Frame');
+math4.onmouseover = logMouseOver3;
+math4.onmouseout = logMouseOut3;
+math4.classList.add('highlightOff');
+
+function logMouseOver3() {
+  math4.classList.remove('highlightOff');
+  math4.classList.add('highlightOn');
+  window.triangleOn();
+}
+
+function logMouseOut3() {
+  math4.classList.remove('highlightOn');
+  math4.classList.add('highlightOff');
+  triangleOff();
+}
+
+smartdown.setVariable('run', false);
+smartdown.setVariable('reset', false);
+this.dependOn = ['run', 'reset'];
+this.depend = function() {
+  if (env.run == true) {
+    smartdown.setVariable('run',false);
+    window.runLimit();
+  }
+  if (env.reset == true) {
+    smartdown.setVariable('reset', false);
+    window.resetSecant();
+  }
+};
+
 ```
 
 
@@ -330,9 +402,10 @@ right.classList.add('right');
 //smartdown.import=https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.7/jsxgraphcore.js
 
 smartdown.importCssUrl('https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.7/jsxgraph.css');
+myDiv = this.div;
 
-const myDiv = this.div;
 myDiv.innerHTML = `<div id='box3' class='jxgbox' style='height:500px'>`;
+
 
 JXG.Options.axis.ticks.majorHeight = 40;
 // create the board
@@ -360,58 +433,42 @@ let yaxis = board2.create('axis', [[0, 0], [0, 1]],
 
 // parabala and it's derivative
 let f = function(x) { return  x*x; };
-let df = function(x) { return 2*x; };
-let x = board2.create('glider', [1,0, xaxis], {name:'x', size:6});
+let df = function(x) { return 2*x; }
+let x = board2.create('glider', [2,0, xaxis], {name:'x', size:6});
 let fx = board2.create('point', [
   function() { return x.X(); }, 
   function() { return f(x.X()); }], {name:'', color:'#222299', fixed:true});
 let graph_f = board2.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
-let graph_df = board2.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:false});
+let graph_df = board2.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:true});
 let dfx = board2.create('point', [
   function() { return x.X(); }, 
-  function() { return df(x.X()); }], {name:'', color:'#44AA44', fixed:true, visible:false});
+  function() { return df(x.X()); }], {name:'', color:'#44AA44', fixed:true, visible:true});
+
+// tangent line section
+let tangent = board2.create('line', [
+  function() { return f(x.X());},
+  function() { return - df(x.X());},
+  1], {color:'#222299', visible:true});
+let tangentSlopeText = board2.create('text',[
+  function() { return x.X() + 0.5; },
+  function() { return f(x.X()) + 0.5;},
+  function(){ return 'slope = '+ df(x.X()).toFixed(2); }], {fontSize:15, visible:true});
 
 
 // Secant line section
 // the slider point for the secant
-let x_h = board2.create('glider', [x.X() + 2, 0, xaxis], {name:'x + h', size:6, color:'green', visible:true} ); 
+let x_h = board2.create('glider', [x.X() + 3, 0, xaxis], {name:'x + h', size:6, color:'green', visible:false} ); 
 
-// sliding point on parabala 
-let fx_h = board2.create('point', [
-                function() { return x_h.X(); }, 
-                function() { return f(x_h.X()); }
-          ], {name:'', color:'#222299', fixed: true, size:3, visible:true});
+// let highlightFon = function() {
+//   graph_f.setAttribute({strokeColor:'#33FFFF', strokeWidth:3});
+// };
 
-let secant = board2.create('line', [fx, fx_h], {color:'#222299', visible:true});
-let secantSlope = function() { 
-  if (x.X() == x_h.X()) { return "UNDEFINED: divide by zero"; }
-  return ((f(x.X()) - f(x_h.X()))/(x.X() - x_h.X())).toFixed(3).toString(); 
-}
+// let highlightFoff = function() {
+//   graph_f.setAttribute({strokeColor:'#999999', strokeWidth:1});
+// };
 
-let secantSlopeText = board2.create('text',[
-  function() { return x.X() + (x_h.X() - x.X())/2 - 1.8; },
-  function() { return f(x.X()) + (f(x_h.X()) - f(x.X()))/2;},
-  function(){ return 'slope = '+ secantSlope(); }], {fontSize:15, visible:true});
-
-let p = board2.create('point', [ 
-  function() { return x_h.X(); }, 
-  function() { return f(x.X());}], {visible:false});
-
-let rise = board2.create('line', [fx_h, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
-let run = board2.create('line', [fx, p], {color:'black', strokeWidth:1, straightFirst:false, straightLast:false, dash:2, visible:true});
-let riseText = board2.create('text', [
-  function() { if (x_h.X() > x.X()) { return x_h.X() + 0.1; } 
-         return x_h.X() - 1.5; },
-  function() { return (f(x_h.X()) - f(x.X()))/2 + f(x.X()); },
-  '(x+h)^2 - x^2'], {fontSize:12, visible:true});
-
-let runText = board2.create('text', [
-  function() { return x.X() + (x_h.X() - x.X())/2; },
-  function() { return f(x.X()) - 0.3; },
-  'h'], {fontSize:12, visible:true});
-
-
-
+// window.highlightFoff = highlightFoff;
+// window.highlightFon = highlightFon;
 
 this.sizeChanged = function() {      
   board2.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
@@ -423,12 +480,6 @@ this.sizeChanged = function() {
 
 
 #### --outlinebox right3
-
-### Use the Limit to Turn the Secant into a Tangent
-We can use a **limit** to turn a secant into a tangent. If we drag the green dot $x+h$  towards the red $x$ dot 
-- the value of $h$ gets very small.
-- the secant gets closer to the tangent 
-- the slope of the secant $2x + h$ gets close to $2x$.
 
 We write this as
 $$f'(x) = \lim_{h \to 0} 2x + h = 2x$$
@@ -452,6 +503,8 @@ right.classList.remove('decoration-outlinebox');
 outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
+
+
 
 ```
 
