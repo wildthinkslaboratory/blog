@@ -353,7 +353,7 @@ this.sizeChanged = function() {
 We can easily write an expression for the slope of the secant line. 
 $$\frac{(x + h)^2 - x^2}{h}$$
 
-You can investigate what happens when $h$ gets very small by dragging the green dot towards the red dot or by using these buttons. [*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true)
+You can investigate what happens when $h$ gets very small by dragging the green dot towards the red dot or by using these buttons. [*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true)  You can also drag the red dot.
 
 When $h$ gets close to $0$, the secant line becomes very close to the tangent line.  The slope of this secant line will be very close to the slope of the tangent line. 
 
@@ -361,7 +361,7 @@ Try to guess the slope of the tangent line
 when $x=1$ [](:?s1)
 when $x=2$ [](:?s2)
 
-If the distance between the points goes all the way to zero, then the slope of the secant is undefined due to division my zero. 
+If the distance between the points goes all the way to zero, then the slope of the secant is undefined due to division by zero. 
 
 
 #### --outlinebox
