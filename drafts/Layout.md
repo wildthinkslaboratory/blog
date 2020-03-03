@@ -1,35 +1,21 @@
 ---
 layout: post
-title: Triptych Layouts for Complex Explanations
+title: Layouts for Complex Explanations
 date: 2020-01-01
 smartdown: true
-comments: false
+comments: true
 background: '/img/posts/triptych.jpg'
 ---
 
 This post is the next iteration in my process to build a strategy for explaining complex mathematical problems, proofs and ideas.  My first attempt can be found [here](https://wildthinkslaboratory.github.io/smartblog/calculus/smartdown/2020/02/19/mathExplanations.html).  The basic idea is to break my explanation down into three parts: the high level ideas, a picture of the model, and symbolic reasoning. The explanation should present all three parts in an integrated way.  It should make sure the main ideas don't get lost in the details and it should help the reader map the symbolic statements to their meaning in the model.  
 
-My friend [Dan](https://doctorbud.com) gave me the idea of using a [triptych](https://en.wikipedia.org/wiki/Triptych) approach for displaying the three parts of the explanation.  Triptychs are three paneled paintings that were common as altar paintings in the Middle Ages.
+My friend [Dan](https://doctorbud.com) gave me the idea of placing each of my three parts of an explanation into a different pane in of a [triptych](https://en.wikipedia.org/wiki/Triptych).  Triptychs are three paneled paintings that were common as altar paintings in the Middle Ages.
 
 ![halfwidth](https://upload.wikimedia.org/wikipedia/commons/b/bf/Annunciation_Triptych_%28Merode_Altarpiece%29_MET_DP273206.jpg)
 
-I could place each of my three elements in a different box in a three pane panel.  The high level ideas section tends to be short or small relative to the model and the symbolic reasoning.  In this first attempt I'm going to combine the high level story with the symbolic reasoning into the right hand panel.  
+In this second attempt at this explanation I'm going to try a two panel approach, but I'm not done experimenting and I may add another panel yet. I'm going to present the picture of the model in the first panel and combine the high level story with the symbolic reasoning into the second panel.  I'm adding a new **highlight** function that I hope will help readers maintain a mapping between the symbolic formulas and their meaning in the model.  Look for formulas with a gray back ground and hold your mouse over them to see the mapping.
 
-### The Story
 
-We want to find the derivative of a function.  The derivative of a function tells us the slope of the tangent line to the function at different points.  But how do we find it?  There is no obvious formula for the slope of the tangent line.  We can easily write an expression for the slope of the secant line. Now, if we make the space between the two points in our secant very, very, very small, the secant line becomes very close to the tangent line.  The slope of this secant line will be very close to the slope of the tangent line. If the distance between the points goes all the way to zero, then the slope of the secant is undefined due to division my zero. If we take the limit of the slope of the secant line as the space between the points gets close to zero, the limit does exist and it gives us the function for the slope of the tangent line to our function.  
-
-### The Symbolic Reasoning
-$$
-\begin{align}
-f(x) & = x^2 \newline
-f'(x) & = \lim_{h \to 0} \frac{(x + h)^2 - x^2}{h}  \newline
-& = \lim_{h \to 0} \frac{x^2 + 2hx + h^2 - x^2}{h}   \newline 
-& = \lim_{h \to 0} \frac{2hx + h^2}{h}   \newline
-& = \lim_{h \to 0} 2x + h  \newline
-& = 2x  
-\end{align}
-$$
 ### Finding the Derivative
 
 #### --outlinebox outer1
@@ -187,7 +173,7 @@ outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
 
-const formula1 = document.getElementById('MathJax-Element-2-Frame');
+const formula1 = document.getElementById('MathJax-Element-1-Frame');
 formula1.onmouseover = logMouseOver;
 formula1.onmouseout = logMouseOut;
 formula1.classList.add('highlightOff');
@@ -407,7 +393,7 @@ outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
 
-const formula2 = document.getElementById('MathJax-Element-4-Frame');
+const formula2 = document.getElementById('MathJax-Element-3-Frame');
 formula2.onmouseover = logMouseOver3;
 formula2.onmouseout = logMouseOut3;
 formula2.classList.add('highlightOff');
@@ -658,7 +644,7 @@ outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
 
-const formula3 = document.getElementById('MathJax-Element-26-Frame');
+const formula3 = document.getElementById('MathJax-Element-25-Frame');
 formula3.onmouseover = logMouseOver4;
 formula3.onmouseout = logMouseOut4;
 formula3.classList.add('highlightOff');
