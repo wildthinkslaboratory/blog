@@ -7,11 +7,30 @@ comments: false
 background: '/img/posts/triptych.jpg'
 ---
 
-I'm breaking an explanation down into three parts: the high level ideas, a picture of the model, and symbolic reasoning. My friend [Dan](https://doctorbud.com) gave me the idea of using a [triptych](https://en.wikipedia.org/wiki/Triptych) approach for displaying the three parts of the explanation.  
+This post is the next iteration in my process to build a strategy for explaining complex mathematical problems, proofs and ideas.  My first attempt can be found [here](https://wildthinkslaboratory.github.io/smartblog/calculus/smartdown/2020/02/19/mathExplanations.html).  The basic idea is to break my explanation down into three parts: the high level ideas, a picture of the model, and symbolic reasoning. The explanation should present all three parts in an integrated way.  It should make sure the main ideas don't get lost in the details and it should help the reader map the symbolic statements to their meaning in the model.  
+
+My friend [Dan](https://doctorbud.com) gave me the idea of using a [triptych](https://en.wikipedia.org/wiki/Triptych) approach for displaying the three parts of the explanation.  Triptychs are three paneled paintings that were common as altar paintings in the Middle Ages.
 
 ![halfwidth](https://upload.wikimedia.org/wikipedia/commons/b/bf/Annunciation_Triptych_%28Merode_Altarpiece%29_MET_DP273206.jpg)
 
-Why am I only using two boxes?
+I could place each of my three elements in a different box in a three pane panel.  The high level ideas section tends to be short or small relative to the model and the symbolic reasoning.  In this first attempt I'm going to combine the high level story with the symbolic reasoning into the right hand panel.  
+
+### The Story
+
+We want to find the derivative of a function.  The derivative of a function tells us the slope of the tangent line to the function at different points.  But how do we find it?  There is no obvious formula for the slope of the tangent line.  We can easily write an expression for the slope of the secant line. Now, if we make the space between the two points in our secant very, very, very small, the secant line becomes very close to the tangent line.  The slope of this secant line will be very close to the slope of the tangent line. If the distance between the points goes all the way to zero, then the slope of the secant is undefined due to division my zero. If we take the limit of the slope of the secant line as the space between the points gets close to zero, the limit does exist and it gives us the function for the slope of the tangent line to our function.  
+
+### The Symbolic Reasoning
+$$
+\begin{align}
+f(x) & = x^2 \newline
+f'(x) & = \lim_{h \to 0} \frac{(x + h)^2 - x^2}{h}  \newline
+& = \lim_{h \to 0} \frac{x^2 + 2hx + h^2 - x^2}{h}   \newline 
+& = \lim_{h \to 0} \frac{2hx + h^2}{h}   \newline
+& = \lim_{h \to 0} 2x + h  \newline
+& = 2x  
+\end{align}
+$$
+### Finding the Derivative
 
 #### --outlinebox outer1
 
@@ -99,11 +118,10 @@ this.sizeChanged = function() {
 
 
 #### --outlinebox right1
+We want to find the derivative of the function $f(x)=x^2$.  The derivative of a function tells us the **slope** of the tangent line to the function at different points.  But how do we find it?  There is no obvious formula for the slope of the tangent line. 
 
-### Finding the Derivative
-The derivative of a function $f(x)=x^2$ tells us the **slope** of the tangent line. Drag the red dot to see the slope of the tangent line for different values of $x$.
+Drag the red dot to see the slope of the tangent line for different values of $x$.
 
-How do we figure out what the slope is for each value of $x$?
 
 #### --outlinebox
 #### --outlinebox
@@ -118,7 +136,7 @@ smartdown.importCssCode(
 }
 
 .left {
-  padding-top: 40px; 
+  padding-top: 10px; 
 }
 
 .right {
@@ -129,10 +147,12 @@ smartdown.importCssCode(
 
 .highlightOn {
   background-color: #33FFFF;
+  padding: 10px;
 }
 
 .highlightOff {
   background-color: #CCCCCC;
+  padding: 10px;
 }
 
 @media (min-width: 800px) {
@@ -167,27 +187,27 @@ outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
 
-const math1 = document.getElementById('MathJax-Element-1-Frame');
-math1.onmouseover = logMouseOver;
-math1.onmouseout = logMouseOut;
-math1.classList.add('highlightOff');
+const formula1 = document.getElementById('MathJax-Element-2-Frame');
+formula1.onmouseover = logMouseOver;
+formula1.onmouseout = logMouseOut;
+formula1.classList.add('highlightOff');
 
 function logMouseOver() {
-  math1.classList.add('highlightOn');
-  math1.classList.remove('highlightOff');
+  formula1.classList.add('highlightOn');
+  formula1.classList.remove('highlightOff');
   highlightFon();
 }
 
 function logMouseOut() {
-  math1.classList.add('highlightOff');
-  math1.classList.remove('highlightOn');
+  formula1.classList.add('highlightOff');
+  formula1.classList.remove('highlightOn');
   highlightFoff();
 }
 
 ```
 
 
-### Derivatives are Slopes
+### Turning Secants into Tangents
 #### --outlinebox outer2
 
 #### --outlinebox left2
@@ -227,7 +247,7 @@ let yaxis = board1.create('axis', [[0, 0], [0, 1]],
 // parabala and it's derivative
 let f = function(x) { return  x*x; };
 let df = function(x) { return 2*x; };
-let x = board1.create('glider', [1,0, xaxis], {name:'x', fixed:true, size:6});
+let x = board1.create('glider', [1,0, xaxis], {name:'x', fixed:false, size:6});
 let fx = board1.create('point', [
   function() { return x.X(); }, 
   function() { return f(x.X()); }], {name:'', color:'#222299', fixed:true});
@@ -282,6 +302,18 @@ let runText = board1.create('text', [
   function() { return f(x.X()) - 0.1; },
   'h'], {fontSize:12, visible:false});
 
+board1.on('update', function() {
+  const xFloor = Math.floor(x.X());
+  if ((x.X() - xFloor) < 0.2) {
+    x.moveTo([xFloor, 0]);
+    return;
+  }
+  const xCeil = Math.ceil(x.X());
+  if ((xCeil - x.X()) < 0.2) {
+    x.moveTo([xCeil, 0]);
+    return;
+  }  
+});
 
 let triangleOn = function() {
   triangle.setAttribute({visible:true});
@@ -298,8 +330,17 @@ let triangleOff = function() {
 window.triangleOff = triangleOff;
 window.triangleOn  = triangleOn;
 
-let runLimit = function() {
-  x_h.moveTo([x.X(),0],2000);
+let goClose = function() {
+  if (x_h.X() < x.X()) {
+    x_h.moveTo([x.X()-0.01, 0],2000);
+  }
+  else {
+    x_h.moveTo([x.X()+0.01, 0],2000);
+  }
+}
+
+let goToZero = function() {
+  x_h.moveTo([x.X(), 0],500);
 }
 
 let resetSecant = function() {
@@ -307,7 +348,8 @@ let resetSecant = function() {
   x_h.moveTo([3,0]);
 };
 
-window.runLimit = runLimit;
+window.goClose = goClose;
+window.goToZero = goToZero;
 window.resetSecant = resetSecant;
 
 this.sizeChanged = function() {      
@@ -319,34 +361,39 @@ this.sizeChanged = function() {
 #### --outlinebox
 
 #### --outlinebox right2
-The definition of the derivative starts with the **slope** of a secant line. 
+We can easily write an expression for the slope of the secant line. 
 $$\frac{(x + h)^2 - x^2}{h}$$
 
-To find the derivative $f'(x)$, we take the limit of the slope of the secant line as $h$ goes to zero.
-$$f'(x) = \lim_{h \to 0} \frac{(x + h)^2 - x^2}{h}$$
+You can investigate what happens when $h$ gets very small by dragging the green dot towards the red dot or by using these buttons. [*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true)
 
-You can investigate what happens when $h$ gets very small by dragging the green dot towards the red dot or by using these buttons. [Send h to zero](:=run=true) [Reset](:=reset=true)
+When $h$ gets close to $0$, the secant line becomes very close to the tangent line.  The slope of this secant line will be very close to the slope of the tangent line. 
 
-**What happens when $h=0$?**
-- The slope of the secant line is undefined when $h=0$.
+Try to guess the slope of the tangent line
+when $x=1$ [](:?s1)
+when $x=2$ [](:?s2)
 
-**What happens as $h$ gets very close to $0$?**
-- The secant line gets closer and closer to the **tangent** line.  
-- The slope of the secant line gets closer and closer to 2.
+If the distance between the points goes all the way to zero, then the slope of the secant is undefined due to division my zero. 
+
+
 #### --outlinebox
 #### --outlinebox
 
 
-### Solving the Limit 
-To solve the limit and find a function for the derivative we need to do some algebra.
+### Taking the Limit
+The derivative of a function $f(x)$ is defined as the limit of the slope of the secant as $h$ goes to $0$.  
+$$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$$
+The value of the limit is determined by what happens when $h$ is very near $0$, not what happens when $h=0$.  In this way we avoid the problem of dividing by $0$.
+
+To solve the limit for the function $f(x) = x^2$, we need to do some algebra.
 $$
 \begin{align}
-f'(x) = \lim_{h \to 0} \frac{(x + h)^2 - x^2}{h} & = \lim_{h \to 0} \frac{x^2 + 2hx + h^2 - x^2}{h}  & \textrm{expand $(x+h)^2$} \newline 
+f'(x) & = \lim_{h \to 0} \frac{(x + h)^2 - x^2}{h} & \newline
+& = \lim_{h \to 0} \frac{x^2 + 2hx + h^2 - x^2}{h}  & \textrm{expand $(x+h)^2$} \newline 
 & = \lim_{h \to 0} \frac{2hx + h^2}{h} & \textrm{combine like terms}  \newline
 & = \lim_{h \to 0} 2x + h & \textrm{cancel $h$ terms}  \newline
-& = 2x  
 \end{align}
 $$
+All of this assumes that the value $h$ gets infinitely close to $0$ without ever reaching it.
 ```javascript /autoplay
 const outer = document.getElementById('outer2');
 const left = document.getElementById('left2');
@@ -360,39 +407,65 @@ outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
 
-const math4 = document.getElementById('MathJax-Element-4-Frame');
-math4.onmouseover = logMouseOver3;
-math4.onmouseout = logMouseOut3;
-math4.classList.add('highlightOff');
+const formula2 = document.getElementById('MathJax-Element-4-Frame');
+formula2.onmouseover = logMouseOver3;
+formula2.onmouseout = logMouseOut3;
+formula2.classList.add('highlightOff');
 
 function logMouseOver3() {
-  math4.classList.remove('highlightOff');
-  math4.classList.add('highlightOn');
+  formula2.classList.remove('highlightOff');
+  formula2.classList.add('highlightOn');
   window.triangleOn();
 }
 
 function logMouseOut3() {
-  math4.classList.remove('highlightOn');
-  math4.classList.add('highlightOff');
+  formula2.classList.remove('highlightOn');
+  formula2.classList.add('highlightOff');
   triangleOff();
 }
 
-smartdown.setVariable('run', false);
+smartdown.setVariable('close', false);
+smartdown.setVariable('gotozero', false);
 smartdown.setVariable('reset', false);
-this.dependOn = ['run', 'reset'];
+
+this.dependOn = ['close', 'gotozero', 'reset'];
 this.depend = function() {
-  if (env.run == true) {
-    smartdown.setVariable('run',false);
-    window.runLimit();
+  if (env.close == true) {
+    smartdown.setVariable('close',false);
+    window.goClose();
+  }
+  if (env.gotozero == true) {
+    smartdown.setVariable('gotozero', false);
+    window.goToZero();
   }
   if (env.reset == true) {
     smartdown.setVariable('reset', false);
     window.resetSecant();
-  }
+    }
 };
 
 ```
 
+```javascript /autoplay
+smartdown.setVariable('s1', '');
+smartdown.setVariable('s2', '');
+this.dependOn = ['s1', 's2'];
+this.depend = function() {
+  if (env.s1 == 2) {
+    smartdown.showDisclosure('correct','','bottomright,transparent,shadow'); 
+    setTimeout(function () {
+         smartdown.hideDisclosure('correct','','bottomright'); 
+    }, 3000);
+  }
+    if (env.s2 == 4) {
+    smartdown.showDisclosure('correct','','bottomright,transparent,shadow'); 
+    setTimeout(function () {
+         smartdown.hideDisclosure('correct','','bottomright'); 
+    }, 3000);
+  }
+
+};
+````
 
 #### --outlinebox outer3
 
@@ -439,10 +512,14 @@ let fx = board2.create('point', [
   function() { return x.X(); }, 
   function() { return f(x.X()); }], {name:'', color:'#222299', fixed:true});
 let graph_f = board2.create('functiongraph', [f,-10,10], {strokeColor:'#999999'});
-let graph_df = board2.create('functiongraph', [df,-10,10], {strokeColor:'#44AA44', visible:true});
+let graph_df = board2.create('functiongraph', [df,-10,10], {strokeColor:'green', visible:true});
 let dfx = board2.create('point', [
   function() { return x.X(); }, 
-  function() { return df(x.X()); }], {name:'', color:'#44AA44', fixed:true, visible:true});
+  function() { return df(x.X()); }], {name:'', color:'green', fixed:true, visible:true});
+let dfText = board2.create('text',[
+  function() { return x.X() - 1.4; },
+  function() { return df(x.X()) + 0.3;},
+  function(){ return '('+ x.X().toFixed(2) + ',' + df(x.X()).toFixed(2) + ')'; }], {fontSize:15, visible:true});
 
 // tangent line section
 let tangent = board2.create('line', [
@@ -450,8 +527,8 @@ let tangent = board2.create('line', [
   function() { return - df(x.X());},
   1], {color:'#222299', visible:true});
 let tangentSlopeText = board2.create('text',[
-  function() { return x.X() + 0.5; },
-  function() { return f(x.X()) + 0.5;},
+  function() { return x.X() + 0.3; },
+  function() { return f(x.X()) + 0.3;},
   function(){ return 'slope = '+ df(x.X()).toFixed(2); }], {fontSize:15, visible:true});
 
 
@@ -459,16 +536,16 @@ let tangentSlopeText = board2.create('text',[
 // the slider point for the secant
 let x_h = board2.create('glider', [x.X() + 3, 0, xaxis], {name:'x + h', size:6, color:'green', visible:false} ); 
 
-// let highlightFon = function() {
-//   graph_f.setAttribute({strokeColor:'#33FFFF', strokeWidth:3});
-// };
+let highlightDFon = function() {
+  graph_df.setAttribute({strokeColor:'#33FFFF', strokeWidth:3});
+};
 
-// let highlightFoff = function() {
-//   graph_f.setAttribute({strokeColor:'#999999', strokeWidth:1});
-// };
+let highlightDFoff = function() {
+  graph_df.setAttribute({strokeColor:'green', strokeWidth:1});
+};
 
-// window.highlightFoff = highlightFoff;
-// window.highlightFon = highlightFon;
+window.highlightDFon = highlightDFon;
+window.highlightDFoff = highlightDFoff;
 
 this.sizeChanged = function() {      
   board2.resizeContainer(myDiv.offsetWidth, myDiv.offsetHeight);
@@ -480,16 +557,93 @@ this.sizeChanged = function() {
 
 
 #### --outlinebox right3
-
-We write this as
-$$f'(x) = \lim_{h \to 0} 2x + h = 2x$$
-The derivative of $f(x) = x^2$ is the function
+Finally, we note that for very small values of $h$, the value of 
+$$\lim_{h \to 0} 2x + h$$ becomes $2x$.  
+So the derivative of $f(x) = x^2$ is 
 $$f'(x) = 2x$$
 
+Drag the red dot to verify that the function $f'(x) = 2x$ gives the slope of the tangent line.
+
+When the derivative $f'(x)$ is positive the function $f(x)$ [[](:!increasing)](::pulldown1/tooltip). When the derivative is negative the function [[](:!decreasing)](::pulldown2/tooltip). When the derivative is zero the function [[](:!minimum)](::pulldown3/tooltip).
 #### --outlinebox
 #### --outlinebox
 
 
+# :::: pulldown1
+[](:Xa1) is increasing
+[](:Xa2) is decreasing
+[](:Xa3) has a minimum
+# ::::
+
+# :::: pulldown2
+[](:Xa4) is increasing
+[](:Xa5) is decreasing
+[](:Xa6) has a minimum
+# ::::
+
+# :::: pulldown3
+[](:Xa7) is increasing
+[](:Xa8) is decreasing
+[](:Xa9) has a minimum
+# ::::
+
+```javascript /autoplay
+smartdown.setVariable('a1', false);
+smartdown.setVariable('a2', false);
+smartdown.setVariable('a3', false);
+smartdown.setVariable('increasing', '________');
+
+this.dependOn = ['a1', 'a2', 'a3'];
+
+this.depend = function() {
+  if (env.a1 == true && env.a2 == false && env.a3 == false) {
+      smartdown.setVariable('increasing', 'is increasing');
+      smartdown.showDisclosure('correct','','bottomright,transparent,shadow'); 
+      setTimeout(function () {
+           smartdown.hideDisclosure('correct','','bottomright'); 
+      }, 3000);
+    } 
+  };
+```
+
+
+```javascript /autoplay
+smartdown.setVariable('a4', false);
+smartdown.setVariable('a5', false);
+smartdown.setVariable('a6', false);
+smartdown.setVariable('decreasing', '________');
+
+this.dependOn = ['a4', 'a5', 'a6'];
+
+this.depend = function() {
+  if (env.a4 == false && env.a5 == true && env.a6 == false) {
+      smartdown.setVariable('decreasing', 'is decreasing');
+      smartdown.showDisclosure('correct','','bottomright,transparent,shadow'); 
+      setTimeout(function () {
+           smartdown.hideDisclosure('correct','','bottomright'); 
+      }, 3000);
+    } 
+  };
+```
+
+```javascript /autoplay
+smartdown.setVariable('a7', false);
+smartdown.setVariable('a8', false);
+smartdown.setVariable('a9', false);
+smartdown.setVariable('minimum', '________');
+
+this.dependOn = ['a7', 'a8', 'a9'];
+
+this.depend = function() {
+  if (env.a7 == false && env.a8 == false && env.a9 == true) {
+      smartdown.setVariable('minimum', 'has a minimum');
+      smartdown.showDisclosure('correct','','bottomright,transparent,shadow'); 
+      setTimeout(function () {
+           smartdown.hideDisclosure('correct','','bottomright'); 
+      }, 3000);
+    } 
+  };
+```
 ```javascript /autoplay
 
 const outer = document.getElementById('outer3');
@@ -504,7 +658,28 @@ outer.classList.add('outer');
 left.classList.add('left');
 right.classList.add('right');
 
+const formula3 = document.getElementById('MathJax-Element-26-Frame');
+formula3.onmouseover = logMouseOver4;
+formula3.onmouseout = logMouseOut4;
+formula3.classList.add('highlightOff');
 
+function logMouseOver4() {
+  formula3.classList.remove('highlightOff');
+  formula3.classList.add('highlightOn');
+  window.highlightDFon();
+}
+
+function logMouseOut4() {
+  formula3.classList.remove('highlightOn');
+  formula3.classList.add('highlightOff');
+  window.highlightDFoff();
+}
 
 ```
+# :::: correct
+# --colorbox right
+correct! :grinning:
+# --colorbox
+# ::::
+
 
