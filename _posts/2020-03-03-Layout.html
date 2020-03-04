@@ -437,16 +437,22 @@ this.depend = function() {
 
 ```javascript /autoplay
 smartdown.setVariable('s1', '');
-smartdown.setVariable('s2', '');
-this.dependOn = ['s1', 's2'];
+this.dependOn = ['s1'];
 this.depend = function() {
-  if (env.s1 == 2) {
+  if (env.s1 == '2') {
     smartdown.showDisclosure('correct','','bottomright,transparent,shadow'); 
     setTimeout(function () {
          smartdown.hideDisclosure('correct','','bottomright'); 
     }, 3000);
   }
-    if (env.s2 == 4) {
+};
+```
+
+```javascript /autoplay
+smartdown.setVariable('s2', '');
+this.dependOn = ['s2'];
+this.depend = function() {
+  if (env.s2 == '4') {
     smartdown.showDisclosure('correct','','bottomright,transparent,shadow'); 
     setTimeout(function () {
          smartdown.hideDisclosure('correct','','bottomright'); 
@@ -454,8 +460,7 @@ this.depend = function() {
   }
 
 };
-````
-
+```
 #### --outlinebox outer3
 
 #### --outlinebox left3
