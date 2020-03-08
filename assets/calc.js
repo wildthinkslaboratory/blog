@@ -761,7 +761,15 @@ function AdjSecant(binfo, xinterval, F) {
     board.removeObject(f2);
     xint.delete();
   };
+
+  this.onUpdate = function() {
+    xint.onUpdate();
+  };
 }
+
+
+
+
 
 
 function AdjSecantRect(binfo, xinterval, F) {
@@ -1249,6 +1257,8 @@ function SingleFunctionBoard(divName, bBox, F, attributes) {
   exports.Slider = Slider;
   exports.SingleFunctionBoard = SingleFunctionBoard;
   exports.AdjRectangle2 = AdjRectangle2;
+  exports.XInterval = XInterval;
+
 
 });
 
