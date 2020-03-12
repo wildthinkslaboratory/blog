@@ -15,7 +15,7 @@ To find the derivative of $f$ we can use the definition of the derivative
 $$f'(x)  =  \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}$$
 Now we plug in the definition of our particular function $f$ to get
 $$f'(x) = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
-Unfortunately, it's not obvious how to evaluate this limit.  Fortunately, there is another way.  We can use the chain rule.  Notice that the function $f$ can be viewed as the composition of the two functions $g(x) = \sin(x)$ and $k(x) = x^2$, and we know how to take the derivative of both of these functions.  Let's go back to our definition of the derivative and do some algebra on it.
+Unfortunately, it's not obvious how to evaluate this limit.  What happens as $h$ gets very small? Fortunately, there is another way.  We can use the chain rule.  Notice that the function $f$ can be viewed as the composition of the two functions $g(x) = \sin(x)$ and $k(x) = x^2$, and we know how to take the derivative of both of these functions.  Let's go back to our definition of the derivative and do some algebra on it.
 $$
 \begin{align}
 f'(x) & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}  & \text{definition of derivative} \newline
@@ -579,7 +579,7 @@ this.sizeChanged();
 #### --outlinebox left1
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
 
-This is the standard secant line from the definition of the derivative. Now let's look at some of these quantities in our secants.  
+This is the standard secant line from the definition of the derivative that we don't know how to solve. Let's look at some of these quantities in our secants.  
 $$h$$
 $$\sin((x + h)^2) - \sin(x^2)$$
 $$(x + h)^2 - x^2$$
@@ -589,16 +589,21 @@ $$(x + h)^2 - x^2$$
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2}$$
 This is a secant line on the graph of $g(x) = \sin(x)$, but the change in the $x$ value is different here.  Instead of changing by $h$, it changes by $(x + h)^2 - x^2$.
 
+Let's see what happens when we take the limit.
 [*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true) 
 #### --outlinebox
 
 #### --outlinebox right1
 $$\frac{(x + h)^2 - x^2}{h} $$
 This is the secant line on the graph of $k(x) = x^2$.
-Notice that the product of slopes in the right two boxes is equal to the slope in the first box.
+Notice that the product of slopes in the right two boxes is equal to the slope in the first box. 
 #### --outlinebox
 #### --outlinebox
 
+The good news is that we know how to evaluate the limits in the right two boxes.  As $h$ goes to $0$, we know the expression
+$$\lim_{h \to 0}\frac{(x + h)^2 - x^2}{h} = 2x$$
+Let's take a look at the expression 
+$$\lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2}$$
 
 ```javascript /autoplay
 
@@ -677,7 +682,7 @@ left.classList.add('left');
 middle.classList.add('left');
 right.classList.add('right');
 
-const formula1 = document.getElementById('MathJax-Element-12-Frame');
+const formula1 = document.getElementById('MathJax-Element-13-Frame');
 formula1.onmouseover = logMouseOver;
 formula1.onmouseout = logMouseOut;
 formula1.classList.add('highlightOff');
@@ -694,7 +699,7 @@ function logMouseOut() {
   triangleOff();
 }
 
-const formula2 = document.getElementById('MathJax-Element-16-Frame');
+const formula2 = document.getElementById('MathJax-Element-17-Frame');
 formula2.onmouseover = logMouseOver2;
 formula2.onmouseout = logMouseOut2;
 formula2.classList.add('highlightOff');
@@ -711,7 +716,7 @@ function logMouseOut2() {
   triangle3Off();
 }
 
-const formula3 = document.getElementById('MathJax-Element-21-Frame');
+const formula3 = document.getElementById('MathJax-Element-22-Frame');
 formula3.onmouseover = logMouseOver3;
 formula3.onmouseout = logMouseOut3;
 formula3.classList.add('highlightOff');
@@ -728,7 +733,7 @@ function logMouseOut3() {
   triangle2Off();
 }
 
-const formula4 = document.getElementById('MathJax-Element-13-Frame');
+const formula4 = document.getElementById('MathJax-Element-14-Frame');
 formula4.onmouseover = logMouseOver4;
 formula4.onmouseout = logMouseOut4;
 formula4.classList.add('highlightOff');
@@ -745,7 +750,7 @@ function logMouseOut4() {
   window.hideH();
 }
 
-const formula5 = document.getElementById('MathJax-Element-14-Frame');
+const formula5 = document.getElementById('MathJax-Element-15-Frame');
 formula5.onmouseover = logMouseOver5;
 formula5.onmouseout = logMouseOut5;
 formula5.classList.add('highlightOff');
@@ -762,7 +767,7 @@ function logMouseOut5() {
   window.hideR1();
 }
 
-const formula6 = document.getElementById('MathJax-Element-15-Frame');
+const formula6 = document.getElementById('MathJax-Element-16-Frame');
 formula6.onmouseover = logMouseOver6;
 formula6.onmouseout = logMouseOut6;
 formula6.classList.add('highlightOff');
