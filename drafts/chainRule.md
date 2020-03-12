@@ -7,17 +7,27 @@ comments: false
 ---
 
 ### The Chain Rule
-Find the derivative of $h(x) = \sin(x^2)$.  The function $h$ is the composition of two functions, $g(x) = \sin(x)$ and $f(x) = x^2$.  Let's start with the definition of the derivative.
-
+# --outlinebox problem
+**Problem:**
+Find the derivative of $f(x) = \sin(x^2)$. 
+# --outlinebox
+To find the derivative of $f$ we can use the definition of the derivative
+$$f'(x)  =  \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}$$
+Now we plug in the definition of our particular function $f$ to get
+$$f'(x) = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
+Unfortunately, it's not obvious how to evaluate this limit.  Fortunately, there is another way.  We can use the chain rule.  Notice that the function $f$ can be viewed as the composition of the two functions $g(x) = \sin(x)$ and $k(x) = x^2$, and we know how to take the derivative of both of these functions.  Let's go back to our definition of the derivative and do some algebra on it.
 $$
 \begin{align}
-g \circ f'(x) & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}  \newline
-& = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h} \cdot   \frac{(x+h)^2 - x^2}{(x+h)^2 - x^2} \newline 
-& = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{(x+h)^2 - x^2} \cdot \frac{(x+h)^2 - x^2}{h}  
+f'(x) & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}  & \text{definition of derivative} \newline
+& = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h} \cdot   \frac{(x+h)^2 - x^2}{(x+h)^2 - x^2} & \text{multiply by 1} \newline 
+& = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{(x+h)^2 - x^2} \cdot \frac{(x+h)^2 - x^2}{h}  & \text{assoc. prop. of multiplication}
 \end{align}
 $$
-
-
+Now we have a limit that we can work with. So we've taken the normal expression of the secant line
+$$\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
+that we find in the definition of the derivative and expressed it as the product of two new secant lines
+$$\frac{\sin((x + h)^2) - \sin(x^2)}{(x+h)^2 - x^2} \cdot \frac{(x+h)^2 - x^2}{h} $$
+Let's take a look at these secant lines to see what's going on.
 ```javascript /playable/autoplay
 //smartdown.import=https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.7/jsxgraphcore.js
 
@@ -27,7 +37,7 @@ const myDiv = this.div;
 myDiv.style.width = '100%';
 myDiv.style.height = '100%';
 myDiv.style.margin = 'auto';
-myDiv.innerHTML = `<div id='leftCR' style='height:300px; width:33%; float:left; border:1px solid gray;background:#FFFFFF;border-radius:8px;'></div><div id='middleCR' style='height:300px; width:33%; float:left; border: 1px solid gray;background:#FFFFFF;border-radius:8px;';></div></div><div id='rightCR' style='height:300px; width:33%; float:left; border: 1px solid gray;background:#FFFFFF;border-radius:8px;';></div>`;
+myDiv.innerHTML = `<div id='leftCR' style='height:300px; width:32%; float:left; margin:1%; border:1px solid gray;background:#FFFFFF;border-radius:8px;'></div><div id='middleCR' style='height:300px; width:33%; float:left; margin:1%; border: 1px solid gray;background:#FFFFFF;border-radius:8px;';></div></div><div id='rightCR' style='height:300px; width:33%; float:left; margin:1%; border: 1px solid gray;background:#FFFFFF;border-radius:8px;';></div>`;
 
 
 JXG.Options.text.useMathJax = true;
@@ -86,7 +96,7 @@ let title = board1.create('text',[
   0.6 * (xhigh - xlow) + xlow,
   1 * 4 - 2,
   function() { 
-    return '\\[g \\circ f(x) = \\sin(x^2)\\]';
+    return '\\[f(x) = \\sin(x^2)\\]';
   }], {fontSize:18});
 
 
@@ -99,8 +109,10 @@ let fx = board1.create('point', [
 
 let graph_f = board1.create('functiongraph', [f,-10,10], {strokeColor:'#BBBBBB'});
 
+let start_x_h = 0.65;
+
 let x_h = board1.create('glider', 
-  [x.X() + 0.65, 0, xaxis], 
+  [x.X() + start_x_h, 0, xaxis], 
   {name:'\\[x + h\\]', size:6, color:'green', visible:true} ); 
 
 let fx_h = board1.create('point', [
@@ -111,14 +123,14 @@ let fx_h = board1.create('point', [
 let secant = board1.create('line', [fx, fx_h], {color:'#222299', visible:true});
 
 let secantSlope = function() { 
-  if (x.X() == x_h.X()) { return "UNDEFINED: divide by zero"; }
+  if (x.X() == x_h.X()) { return "undef"; }
   return ((f(x.X()) - f(x_h.X()))/(x.X() - x_h.X())).toFixed(3).toString(); 
 }
 
 let secantSlopeText = board1.create('text',[
   0.6 * (xhigh - xlow) + xlow,
   0.85 * 4 - 2,
-  function(){ return 'slope = '+ secantSlope(); }], 
+  function(){ return 'slope1 = '+ secantSlope(); }], 
   {fontSize:15, visible:true});
 
 
@@ -235,7 +247,7 @@ let title2 = board2.create('text',[
   0.6 * (xhigh - xlow) + xlow,
   1 * 15 - 4,
   function() { 
-    return '\\[f(x) = x^2\\]';
+    return '\\[k(x) = x^2\\]';
   }], {fontSize:18});
 
 
@@ -260,14 +272,14 @@ let fx_h2 = board2.create('point', [
 
 let secant2 = board2.create('line', [fx2, fx_h2], {color:'#222299', visible:true});
 let secantSlope2 = function() { 
-  if (x2.X() == x_h2.X()) { return "UNDEFINED: divide by zero"; }
+  if (x2.X() == x_h2.X()) { return "undef"; }
   return ((f2(x2.X()) - f2(x_h2.X()))/(x2.X() - x_h2.X())).toFixed(3).toString(); 
 }
 
 let secantSlopeText2 = board2.create('text',[
   0.6 * (xhigh - xlow) + xlow,
   0.85 * 15 - 4,
-  function(){ return 'slope = '+ secantSlope2(); }], {fontSize:15, visible:true});
+  function(){ return 'slope3 = '+ secantSlope2(); }], {fontSize:15, visible:true});
 
 
 let p2 = board2.create('point', [ 
@@ -392,14 +404,14 @@ let fx_h3 = board3.create('point', [
 
 let secant3 = board3.create('line', [fx3, fx_h3], {color:'#222299', visible:true});
 let secantSlope3 = function() { 
-  if (x3.X() == x_h3.X()) { return "UNDEFINED: divide by zero"; }
+  if (x3.X() == x_h3.X()) { return "undef"; }
   return ((f3(x3.X()) - f3(x_h3.X()))/(x3.X() - x_h3.X())).toFixed(3).toString(); 
 }
 
 let secantSlopeText3 = board3.create('text',[
   0.6 * (f2(xhigh) - xlow) + xlow,
-  0.9 * 4 - 2,
-  function(){ return 'slope = '+ secantSlope3(); }], {fontSize:15, visible:true});
+  0.85 * 4 - 2,
+  function(){ return 'slope2 = '+ secantSlope3(); }], {fontSize:15, visible:true});
 
 let p3 = board3.create('point', [ 
   function() { return x_h3.X(); }, 
@@ -516,10 +528,45 @@ window.hideR2 = hideR2;
 
 ////////////////////////////////////////////////////////////////////////////
 
+let multSlope = function() { 
+  if (x3.X() == x_h3.X()) { return "undef"; }
+  const s2 = ((f2(x2.X()) - f2(x_h2.X()))/(x2.X() - x_h2.X()));
+  const s3 = ((f3(x3.X()) - f3(x_h3.X()))/(x3.X() - x_h3.X()));
+  return (s2 * s3).toFixed(3).toString(); 
+}
+
+let productSlopeText = board1.create('text',[
+  0.45 * (xhigh - xlow) + xlow,
+  0.8 * 4 - 2,
+  function(){ return 'slope2 * slope3 = '+ multSlope(); }], 
+  {fontSize:15, visible:true});
+
+
+let goClose = function() {
+  if (x_h.X() < x.X()) {
+    x_h.moveTo([x.X()-0.01, 0],1000);
+  }
+  else {
+    x_h.moveTo([x.X()+0.01, 0],1000);
+  }
+}
+
+let goToZero = function() {
+  x_h.moveTo([x.X(), 0],200);
+}
+
+let resetSecant = function() {
+  x_h.moveTo([x.X() + start_x_h, 0]);
+};
+
+window.goClose = goClose;
+window.goToZero = goToZero;
+window.resetSecant = resetSecant;
+
 this.sizeChanged = function() {      
-  board1.resizeContainer(myDiv.offsetWidth * 0.33, myDiv.offsetWidth * 0.4);
-  board2.resizeContainer(myDiv.offsetWidth * 0.33, myDiv.offsetWidth * 0.4);
-  board3.resizeContainer(myDiv.offsetWidth * 0.33, myDiv.offsetWidth * 0.4);
+  board1.resizeContainer(myDiv.offsetWidth * 0.31, myDiv.offsetWidth * 0.33);
+  board2.resizeContainer(myDiv.offsetWidth * 0.31, myDiv.offsetWidth * 0.33);
+  board3.resizeContainer(myDiv.offsetWidth * 0.31, myDiv.offsetWidth * 0.33);
 };
 
 this.sizeChanged();
@@ -531,27 +578,28 @@ this.sizeChanged();
 
 #### --outlinebox left1
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
-This is the standard secant line from the definition of the derivative.
 
+This is the standard secant line from the definition of the derivative. Now let's look at some of these quantities in our secants.  
 $$h$$
-
 $$\sin((x + h)^2) - \sin(x^2)$$
-
 $$(x + h)^2 - x^2$$
 #### --outlinebox
 
 #### --outlinebox middle1
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2}$$
-This is also a secant line on the graph of $g(x) = \sin(x)$.
+This is a secant line on the graph of $g(x) = \sin(x)$, but the change in the $x$ value is different here.  Instead of changing by $h$, it changes by $(x + h)^2 - x^2$.
+
+[*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true) 
 #### --outlinebox
 
 #### --outlinebox right1
 $$\frac{(x + h)^2 - x^2}{h} $$
-Finally, we have the secant line on the graph of $f(x) = x^2$.
+This is the secant line on the graph of $k(x) = x^2$.
+Notice that the product of slopes in the right two boxes is equal to the slope in the first box.
 #### --outlinebox
 #### --outlinebox
 
-$$g \circ f'(x) = g'(f(x)) \cdot f'(x) = \cos(x^2) \cdot 2x$$
+
 ```javascript /autoplay
 
 smartdown.importCssCode(
@@ -629,7 +677,7 @@ left.classList.add('left');
 middle.classList.add('left');
 right.classList.add('right');
 
-const formula1 = document.getElementById('MathJax-Element-6-Frame');
+const formula1 = document.getElementById('MathJax-Element-12-Frame');
 formula1.onmouseover = logMouseOver;
 formula1.onmouseout = logMouseOut;
 formula1.classList.add('highlightOff');
@@ -646,7 +694,7 @@ function logMouseOut() {
   triangleOff();
 }
 
-const formula2 = document.getElementById('MathJax-Element-10-Frame');
+const formula2 = document.getElementById('MathJax-Element-16-Frame');
 formula2.onmouseover = logMouseOver2;
 formula2.onmouseout = logMouseOut2;
 formula2.classList.add('highlightOff');
@@ -663,7 +711,7 @@ function logMouseOut2() {
   triangle3Off();
 }
 
-const formula3 = document.getElementById('MathJax-Element-12-Frame');
+const formula3 = document.getElementById('MathJax-Element-21-Frame');
 formula3.onmouseover = logMouseOver3;
 formula3.onmouseout = logMouseOut3;
 formula3.classList.add('highlightOff');
@@ -680,7 +728,7 @@ function logMouseOut3() {
   triangle2Off();
 }
 
-const formula4 = document.getElementById('MathJax-Element-7-Frame');
+const formula4 = document.getElementById('MathJax-Element-13-Frame');
 formula4.onmouseover = logMouseOver4;
 formula4.onmouseout = logMouseOut4;
 formula4.classList.add('highlightOff');
@@ -697,7 +745,7 @@ function logMouseOut4() {
   window.hideH();
 }
 
-const formula5 = document.getElementById('MathJax-Element-8-Frame');
+const formula5 = document.getElementById('MathJax-Element-14-Frame');
 formula5.onmouseover = logMouseOver5;
 formula5.onmouseout = logMouseOut5;
 formula5.classList.add('highlightOff');
@@ -714,7 +762,7 @@ function logMouseOut5() {
   window.hideR1();
 }
 
-const formula6 = document.getElementById('MathJax-Element-9-Frame');
+const formula6 = document.getElementById('MathJax-Element-15-Frame');
 formula6.onmouseover = logMouseOver6;
 formula6.onmouseout = logMouseOut6;
 formula6.classList.add('highlightOff');
@@ -731,6 +779,25 @@ function logMouseOut6() {
   window.hideR2();
 }
 
+smartdown.setVariable('close', false);
+smartdown.setVariable('gotozero', false);
+smartdown.setVariable('reset', false);
+
+this.dependOn = ['close', 'gotozero', 'reset'];
+this.depend = function() {
+  if (env.close == true) {
+    smartdown.setVariable('close',false);
+    window.goClose();
+  }
+  if (env.gotozero == true) {
+    smartdown.setVariable('gotozero', false);
+    window.goToZero();
+  }
+  if (env.reset == true) {
+    smartdown.setVariable('reset', false);
+    window.resetSecant();
+    }
+};
 ```
 
 
