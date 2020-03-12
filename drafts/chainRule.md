@@ -588,15 +588,16 @@ $$(x + h)^2 - x^2$$
 #### --outlinebox middle1
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2}$$
 This is a secant line on the graph of $g(x) = \sin(x)$, but the change in the $x$ value is different here.  Instead of changing by $h$, it changes by $(x + h)^2 - x^2$.
-
-Let's see what happens when we take the limit.
-[*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true) 
 #### --outlinebox
 
 #### --outlinebox right1
 $$\frac{(x + h)^2 - x^2}{h} $$
-This is the secant line on the graph of $k(x) = x^2$.
-Notice that the product of slopes in the right two boxes is equal to the slope in the first box. 
+This is the secant line on the graph of $k(x) = x^2$. Notice that the product of slopes in the right two boxes is equal to the slope in the first box. Let's see what happens when we take the limit.
+[*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true) 
+[Notes](::dragGreen/tooltip)
+# :::: dragGreen
+You can also drag the green dot in the leftmost box.
+# ::::
 #### --outlinebox
 #### --outlinebox
 
