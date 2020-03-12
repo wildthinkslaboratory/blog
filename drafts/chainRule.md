@@ -7,11 +7,11 @@ comments: false
 ---
 
 ### The Chain Rule
-Find the derivative of $f(x) = \sin(x^2)$.  The function $f$ is the composition of two functions, $f(x) = \sin(x)$ and $g(x) = x^2$.  Let's start with the definition of the derivative.
+Find the derivative of $h(x) = \sin(x^2)$.  The function $h$ is the composition of two functions, $g(x) = \sin(x)$ and $f(x) = x^2$.  Let's start with the definition of the derivative.
 
 $$
 \begin{align}
-f \circ g'(x) & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}  \newline
+g \circ f'(x) & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}  \newline
 & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h} \cdot   \frac{(x+h)^2 - x^2}{(x+h)^2 - x^2} \newline 
 & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{(x+h)^2 - x^2} \cdot \frac{(x+h)^2 - x^2}{h}  
 \end{align}
@@ -86,7 +86,7 @@ let title = board1.create('text',[
   0.6 * (xhigh - xlow) + xlow,
   1 * 4 - 2,
   function() { 
-    return '\\[f \\circ g(x) = \\sin(x^2)\\]';
+    return '\\[g \\circ f(x) = \\sin(x^2)\\]';
   }], {fontSize:18});
 
 
@@ -189,7 +189,7 @@ window.triangleOn  = triangleOn;
 
 //////////////////////////////////////////////////////////////////////////////////
 
-board2 = JXG.JSXGraph.initBoard('rightCR', {boundingbox:[xlow,10,xhigh,-2], showCopyright:false, keepaspectratio:false, axis:false});
+board2 = JXG.JSXGraph.initBoard('rightCR', {boundingbox:[xlow,11,xhigh,-4], showCopyright:false, keepaspectratio:false, axis:false});
 board1.addChild(board2);
 
 ///////////////////////////////////////////////////////    axes
@@ -233,7 +233,7 @@ board2.create('ticks', [yaxis2, 1], {
 
 let title2 = board2.create('text',[
   0.6 * (xhigh - xlow) + xlow,
-  1 * 12 - 2,
+  1 * 15 - 4,
   function() { 
     return '\\[f(x) = x^2\\]';
   }], {fontSize:18});
@@ -266,7 +266,7 @@ let secantSlope2 = function() {
 
 let secantSlopeText2 = board2.create('text',[
   0.6 * (xhigh - xlow) + xlow,
-  0.85 * 12 - 2,
+  0.85 * 15 - 4,
   function(){ return 'slope = '+ secantSlope2(); }], {fontSize:15, visible:true});
 
 
@@ -449,6 +449,71 @@ let triangle3Off = function() {
 window.triangle3Off = triangle3Off;
 window.triangle3On  = triangle3On;
 
+let h1 = board1.create('segment', 
+  [fx, p], 
+  {color:'#33FFFF', strokeWidth:6, visible:false});
+
+let h2 = board2.create('segment', 
+  [fx2, p2], 
+  {color:'#33FFFF', strokeWidth:6, visible:false});
+
+let r11 = board1.create('segment', 
+  [fx_h, p], 
+  {color:'#33FFFF', strokeWidth:6, visible:false});
+
+let r12 = board3.create('segment', 
+  [fx_h3, p3], 
+  {color:'#33FFFF', strokeWidth:6, visible:false});
+
+let r21 = board3.create('segment', 
+  [fx3, p3], 
+  {color:'#33FFFF', strokeWidth:6, visible:false});
+
+let r22 = board2.create('segment', 
+  [fx_h2, p2], 
+  {color:'#33FFFF', strokeWidth:6, visible:false});
+
+
+let showH = function() {
+  h1.setAttribute({visible:true});
+  h2.setAttribute({visible:true});
+};
+
+let hideH = function() {
+  h1.setAttribute({visible:false});
+  h2.setAttribute({visible:false});
+};
+
+window.showH = showH;
+window.hideH = hideH;
+
+let showR1 = function() {
+  r11.setAttribute({visible:true});
+  r12.setAttribute({visible:true});
+};
+
+let hideR1 = function() {
+  r11.setAttribute({visible:false});
+  r12.setAttribute({visible:false});
+};
+
+window.showR1 = showR1;
+window.hideR1 = hideR1;
+
+let showR2 = function() {
+  r21.setAttribute({visible:true});
+  r22.setAttribute({visible:true});
+};
+
+let hideR2 = function() {
+  r21.setAttribute({visible:false});
+  r22.setAttribute({visible:false});
+};
+
+window.showR2 = showR2;
+window.hideR2 = hideR2;
+
+
 ////////////////////////////////////////////////////////////////////////////
 
 this.sizeChanged = function() {      
@@ -466,18 +531,27 @@ this.sizeChanged();
 
 #### --outlinebox left1
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
+This is the standard secant line from the definition of the derivative.
+
+$$h$$
+
+$$\sin((x + h)^2) - \sin(x^2)$$
+
+$$(x + h)^2 - x^2$$
 #### --outlinebox
 
 #### --outlinebox middle1
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2}$$
+This is also a secant line on the graph of $g(x) = \sin(x)$.
 #### --outlinebox
 
 #### --outlinebox right1
 $$\frac{(x + h)^2 - x^2}{h} $$
+Finally, we have the secant line on the graph of $f(x) = x^2$.
 #### --outlinebox
 #### --outlinebox
 
-
+$$g \circ f'(x) = g'(f(x)) \cdot f'(x) = \cos(x^2) \cdot 2x$$
 ```javascript /autoplay
 
 smartdown.importCssCode(
@@ -485,12 +559,12 @@ smartdown.importCssCode(
 
 .highlightOn {
   background-color: #33FFFF;
-  padding: 10px;
+  padding: 14px;
 }
 
 .highlightOff {
   background-color: #CCCCCC;
-  padding: 10px;
+  padding: 14px;
 }
 
 
@@ -572,7 +646,7 @@ function logMouseOut() {
   triangleOff();
 }
 
-const formula2 = document.getElementById('MathJax-Element-7-Frame');
+const formula2 = document.getElementById('MathJax-Element-10-Frame');
 formula2.onmouseover = logMouseOver2;
 formula2.onmouseout = logMouseOut2;
 formula2.classList.add('highlightOff');
@@ -589,7 +663,7 @@ function logMouseOut2() {
   triangle3Off();
 }
 
-const formula3 = document.getElementById('MathJax-Element-8-Frame');
+const formula3 = document.getElementById('MathJax-Element-12-Frame');
 formula3.onmouseover = logMouseOver3;
 formula3.onmouseout = logMouseOut3;
 formula3.classList.add('highlightOff');
@@ -604,6 +678,57 @@ function logMouseOut3() {
   formula3.classList.remove('highlightOn');
   formula3.classList.add('highlightOff');
   triangle2Off();
+}
+
+const formula4 = document.getElementById('MathJax-Element-7-Frame');
+formula4.onmouseover = logMouseOver4;
+formula4.onmouseout = logMouseOut4;
+formula4.classList.add('highlightOff');
+
+function logMouseOver4() {
+  formula4.classList.remove('highlightOff');
+  formula4.classList.add('highlightOn');
+  window.showH();
+}
+
+function logMouseOut4() {
+  formula4.classList.remove('highlightOn');
+  formula4.classList.add('highlightOff');
+  window.hideH();
+}
+
+const formula5 = document.getElementById('MathJax-Element-8-Frame');
+formula5.onmouseover = logMouseOver5;
+formula5.onmouseout = logMouseOut5;
+formula5.classList.add('highlightOff');
+
+function logMouseOver5() {
+  formula5.classList.remove('highlightOff');
+  formula5.classList.add('highlightOn');
+  window.showR1();
+}
+
+function logMouseOut5() {
+  formula5.classList.remove('highlightOn');
+  formula5.classList.add('highlightOff');
+  window.hideR1();
+}
+
+const formula6 = document.getElementById('MathJax-Element-9-Frame');
+formula6.onmouseover = logMouseOver6;
+formula6.onmouseout = logMouseOut6;
+formula6.classList.add('highlightOff');
+
+function logMouseOver6() {
+  formula6.classList.remove('highlightOff');
+  formula6.classList.add('highlightOn');
+  window.showR2();
+}
+
+function logMouseOut6() {
+  formula6.classList.remove('highlightOn');
+  formula6.classList.add('highlightOff');
+  window.hideR2();
 }
 
 ```

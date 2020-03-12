@@ -6,6 +6,7 @@ smartdown: true
 comments: false
 ---
 
+Maybe you have a blog.  Maybe you don't have anything yet, but if you realized how easy it is to create great content, you'd start a blog or a webpage to share your great ideas.
 
 This is a very big paragraph.  Perhaps you love reading and are confident that the content of this article will give you exactly what you want.  More likely, you're skeptical.  The appearance of a large block of text can be overwhelming.  People need some assurance that the text they read is deserving of the effort required to parse it.  
 
