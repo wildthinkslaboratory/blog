@@ -108,11 +108,11 @@ let title = board1.create('text',[
 
 
 let f = function(x) { return  Math.sin(x*x); };
-let x = board1.create('point', [1,0], {name:'\\[x\\]', fixed:true, size:6});
+let x = board1.create('point', [1,0], {name:'\\[x\\]', color:'#666688', fixed:true, size:6});
 let fx = board1.create('point', [
   function() { return x.X(); }, 
   function() { return f(x.X()); }], 
-  {name:'', color:'#222299', fixed:true});
+  {name:'', color:'#666688', fixed:true});
 
 let graph_f = board1.create('functiongraph', [f,-10,10], {strokeColor:'#BBBBBB'});
 
@@ -120,14 +120,15 @@ let start_x_h = 0.65;
 
 let x_h = board1.create('glider', 
   [x.X() + start_x_h, 0, xaxis], 
-  {name:'\\[x + h\\]', size:6, color:'green', visible:true} ); 
+  {name:'\\[x + h\\]', size:6, color:'#EE5511', visible:true} ); 
 
 let fx_h = board1.create('point', [
   function() { return x_h.X(); }, 
   function() { return f(x_h.X()); }], 
-  {name:'', color:'#222299', fixed: true, size:3, visible:true});
+  {name:'', color:'#666688', fixed: true, size:3, visible:true});
 
-let secant = board1.create('line', [fx, fx_h], {color:'#222299', visible:true});
+let secant = board1.create('line', [fx, fx_h], {color:'#BBBBBB', strokeWidth:1, visible:true});
+let segment = board1.create('segment', [fx, fx_h], {color:'#666688', strokeWidth:3, visible:true});
 
 let secantSlope = function() { 
   if (x.X() == x_h.X()) { return "undef"; }
@@ -167,7 +168,7 @@ let runText = board1.create('text', [
   'h'], {fontSize:12, visible:false});
 
 let triangle = board1.create('polygon', [fx, fx_h, p], {
-  fillColor:'#33FFFF', 
+  fillColor:'#99DDFF', 
   fillOpacity: 50,
   borders: {strokeColor: 'yellow'}, 
   strokeWidth:3, visible:false});
@@ -259,25 +260,28 @@ let title2 = board2.create('text',[
 
 
 let f2 = function(x) { return  x * x; };
-let x2 = board2.create('point', [1,0], {name:'\\[x\\]', fixed:true, size:6});
+let x2 = board2.create('point', [1,0], {name:'\\[x\\]', color:'#666688', fixed:true, size:6});
 let fx2 = board2.create('point', [
   function() { return x2.X(); }, 
   function() { return f2(x.X()); }], 
-  {name:'', color:'#222299', fixed:true});
+  {name:'', color:'#666688', fixed:true});
 
 let graph_f2 = board2.create('functiongraph', [f2,-10,10], {strokeColor:'#BBBBBB'});
 
 let x_h2 = board2.create('point', [
 	function() { return x_h.X(); }, 
 	0], 
-  {name:'\\[x + h\\]', size:6, color:'#222299', visible:true} ); 
+  {name:'\\[x + h\\]', size:6, color:'#666688', visible:true} ); 
 
 let fx_h2 = board2.create('point', [ 
   function() { return x_h.X(); }, 
   function() { return f2(x_h.X()); }], 
-  {name:'', color:'#222299', fixed: true, size:3, visible:true});
+  {name:'', color:'#666688', fixed: true, size:3, visible:true});
 
-let secant2 = board2.create('line', [fx2, fx_h2], {color:'#222299', visible:true});
+let secant2 = board2.create('line', [fx2, fx_h2], {color:'#BBBBBB', strokeWidth:1, visible:true});
+let segment2 = board2.create('segment', [fx2, fx_h2], {color:'#666688', strokeWidth:3, visible:true});
+
+
 let secantSlope2 = function() { 
   if (x2.X() == x_h2.X()) { return "undef"; }
   return ((f2(x2.X()) - f2(x_h2.X()))/(x2.X() - x_h2.X())).toFixed(3).toString(); 
@@ -316,7 +320,7 @@ let runText2 = board2.create('text', [
   'h'], {fontSize:12, visible:false});
 
 let triangle2 = board2.create('polygon', [fx2, fx_h2, p2], {
-  fillColor:'#33FFFF', 
+  fillColor:'#99DDFF', 
   fillOpacity: 50,
   borders: {strokeColor: 'yellow'}, 
   strokeWidth:3, visible:false});
@@ -393,23 +397,26 @@ let title3 = board3.create('text',[
   {fontSize:18});
 
 let f3 = function(x) { return  Math.sin(x); };
-let x3 = board3.create('point', [f2(x.X()),0], { name:'\\[x^2\\]', fixed:true, size:6});
+let x3 = board3.create('point', [f2(x.X()),0], { name:'\\[x^2\\]', color:'#666688', fixed:true, size:6});
 let fx3 = board3.create('point', [
   function() { return x3.X(); }, 
-  function() { return f3(x3.X()); }], {name:'', color:'#222299', fixed:true});
+  function() { return f3(x3.X()); }], {name:'', color:'#666688', fixed:true});
 let graph_f3 = board3.create('functiongraph', [f3,xlow,f2(xhigh)], {strokeColor:'#BBBBBB'});
 
 let x_h3 = board3.create('point', [
 	function() { return f2(x_h.X()); }, 
 	0], 
-  {name:'\\[(x+h)^2\\]', size:6, color:'#222299', visible:true} ); 
+  {name:'\\[(x+h)^2\\]', size:6, color:'#666688', visible:true} ); 
  
 let fx_h3 = board3.create('point', [ 
   function() { return x_h3.X(); }, 
   function() { return f3(x_h3.X()); }], 
-  {name:'', color:'#222299', fixed: true, size:3, visible:true});
+  {name:'', color:'#666688', fixed: true, size:3, visible:true});
 
-let secant3 = board3.create('line', [fx3, fx_h3], {color:'#222299', visible:true});
+let secant3 = board3.create('line', [fx3, fx_h3], {color:'#BBBBBB', strokeWidth:1,  visible:true});
+let segment3 = board3.create('segment', [fx3, fx_h3], {color:'#666688', strokeWidth:3, visible:true});
+
+
 let secantSlope3 = function() { 
   if (x3.X() == x_h3.X()) { return "undef"; }
   return ((f3(x3.X()) - f3(x_h3.X()))/(x3.X() - x_h3.X())).toFixed(3).toString(); 
@@ -447,7 +454,7 @@ let runText3 = board3.create('text', [
   {fontSize:12, visible:false});
 
 let triangle3 = board3.create('polygon', [fx3, fx_h3, p3], {
-  fillColor:'#33FFFF', 
+  fillColor:'#99DDFF', 
   fillOpacity: 50,
   borders: {strokeColor: 'yellow'}, 
   strokeWidth:3, visible:false});
@@ -470,27 +477,27 @@ window.triangle3On  = triangle3On;
 
 let h1 = board1.create('segment', 
   [fx, p], 
-  {color:'#33FFFF', strokeWidth:6, visible:false});
+  {color:'#99DDFF', strokeWidth:6, visible:false});
 
 let h2 = board2.create('segment', 
   [fx2, p2], 
-  {color:'#33FFFF', strokeWidth:6, visible:false});
+  {color:'#99DDFF', strokeWidth:6, visible:false});
 
 let r11 = board1.create('segment', 
   [fx_h, p], 
-  {color:'#33FFFF', strokeWidth:6, visible:false});
+  {color:'#99DDFF', strokeWidth:6, visible:false});
 
 let r12 = board3.create('segment', 
   [fx_h3, p3], 
-  {color:'#33FFFF', strokeWidth:6, visible:false});
+  {color:'#99DDFF', strokeWidth:6, visible:false});
 
 let r21 = board3.create('segment', 
   [fx3, p3], 
-  {color:'#33FFFF', strokeWidth:6, visible:false});
+  {color:'#99DDFF', strokeWidth:6, visible:false});
 
 let r22 = board2.create('segment', 
   [fx_h2, p2], 
-  {color:'#33FFFF', strokeWidth:6, visible:false});
+  {color:'#99DDFF', strokeWidth:6, visible:false});
 
 
 let showH = function() {
@@ -570,7 +577,8 @@ window.goClose = goClose;
 window.goToZero = goToZero;
 window.resetSecant = resetSecant;
 
-this.sizeChanged = function() {      
+this.sizeChanged = function() {
+  console.log(myDiv.offsetWidth, myDiv.offsetHeight);
   board1.resizeContainer(myDiv.offsetWidth * 0.31, myDiv.offsetWidth * 0.33);
   board2.resizeContainer(myDiv.offsetWidth * 0.31, myDiv.offsetWidth * 0.33);
   board3.resizeContainer(myDiv.offsetWidth * 0.31, myDiv.offsetWidth * 0.33);
@@ -605,17 +613,33 @@ $$\frac{(x + h)^2 - x^2}{h} $$
 smartdown.importCssCode(
 `
 
-.highlightOn {
-  background-color: #33FFFF;
-  padding: 14px;
+.highlightOnWide {
+  background-color: #99DDFF;
+  padding: 16px;
+  border-radius: 5px;
+  border: 1px solid #88CCEE;
 }
 
-.highlightOff {
-  background-color: #CCCCCC;
-  padding: 14px;
+.highlightOffWide {
+  background-color: #EEF9FF;
+  padding: 16px;
+  border-radius: 5px;
+  border: 1px solid #DDE9EE;
 }
 
+.highlightOnNarrow {
+  background-color: #99DDFF;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #88CCEE;
+}
 
+.highlightOffNarrow {
+  background-color: #EEF9FF;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #DDE9EE;
+}
 .outer {
  
 }
@@ -684,102 +708,102 @@ right.classList.add('right');
 const formula1 = document.getElementById('MathJax-Element-12-Frame');
 formula1.onmouseover = logMouseOver;
 formula1.onmouseout = logMouseOut;
-formula1.classList.add('highlightOff');
+formula1.classList.add('highlightOffWide');
 
 function logMouseOver() {
-  formula1.classList.remove('highlightOff');
-  formula1.classList.add('highlightOn');
+  formula1.classList.remove('highlightOffWide');
+  formula1.classList.add('highlightOnWide');
   window.triangleOn();
 }
 
 function logMouseOut() {
-  formula1.classList.remove('highlightOn');
-  formula1.classList.add('highlightOff');
+  formula1.classList.remove('highlightOnWide');
+  formula1.classList.add('highlightOffWide');
   triangleOff();
 }
 
 const formula2 = document.getElementById('MathJax-Element-13-Frame');
 formula2.onmouseover = logMouseOver2;
 formula2.onmouseout = logMouseOut2;
-formula2.classList.add('highlightOff');
+formula2.classList.add('highlightOffWide');
 
 function logMouseOver2() {
-  formula2.classList.remove('highlightOff');
-  formula2.classList.add('highlightOn');
+  formula2.classList.remove('highlightOffWide');
+  formula2.classList.add('highlightOnWide');
   window.triangle3On();
 }
 
 function logMouseOut2() {
-  formula2.classList.remove('highlightOn');
-  formula2.classList.add('highlightOff');
+  formula2.classList.remove('highlightOnWide');
+  formula2.classList.add('highlightOffWide');
   triangle3Off();
 }
 
 const formula3 = document.getElementById('MathJax-Element-14-Frame');
 formula3.onmouseover = logMouseOver3;
 formula3.onmouseout = logMouseOut3;
-formula3.classList.add('highlightOff');
+formula3.classList.add('highlightOffWide');
 
 function logMouseOver3() {
-  formula3.classList.remove('highlightOff');
-  formula3.classList.add('highlightOn');
+  formula3.classList.remove('highlightOffWide');
+  formula3.classList.add('highlightOnWide');
   window.triangle2On();
 }
 
 function logMouseOut3() {
-  formula3.classList.remove('highlightOn');
-  formula3.classList.add('highlightOff');
+  formula3.classList.remove('highlightOnWide');
+  formula3.classList.add('highlightOffWide');
   triangle2Off();
 }
 
 const formula4 = document.getElementById('MathJax-Element-16-Frame');
 formula4.onmouseover = logMouseOver4;
 formula4.onmouseout = logMouseOut4;
-formula4.classList.add('highlightOff');
+formula4.classList.add('highlightOffNarrow');
 
 function logMouseOver4() {
-  formula4.classList.remove('highlightOff');
-  formula4.classList.add('highlightOn');
+  formula4.classList.remove('highlightOffNarrow');
+  formula4.classList.add('highlightOnNarrow');
   window.showH();
 }
 
 function logMouseOut4() {
-  formula4.classList.remove('highlightOn');
-  formula4.classList.add('highlightOff');
+  formula4.classList.remove('highlightOnNarrow');
+  formula4.classList.add('highlightOffNarrow');
   window.hideH();
 }
 
 const formula5 = document.getElementById('MathJax-Element-17-Frame');
 formula5.onmouseover = logMouseOver5;
 formula5.onmouseout = logMouseOut5;
-formula5.classList.add('highlightOff');
+formula5.classList.add('highlightOffNarrow');
 
 function logMouseOver5() {
-  formula5.classList.remove('highlightOff');
-  formula5.classList.add('highlightOn');
+  formula5.classList.remove('highlightOffNarrow');
+  formula5.classList.add('highlightOnNarrow');
   window.showR1();
 }
 
 function logMouseOut5() {
-  formula5.classList.remove('highlightOn');
-  formula5.classList.add('highlightOff');
+  formula5.classList.remove('highlightOnNarrow');
+  formula5.classList.add('highlightOffNarrow');
   window.hideR1();
 }
 
 const formula6 = document.getElementById('MathJax-Element-18-Frame');
 formula6.onmouseover = logMouseOver6;
 formula6.onmouseout = logMouseOut6;
-formula6.classList.add('highlightOff');
+formula6.classList.add('highlightOffNarrow');
 
 function logMouseOver6() {
-  formula6.classList.remove('highlightOff');
-  formula6.classList.add('highlightOn');
+  formula6.classList.remove('highlightOffNarrow');
+  formula6.classList.add('highlightOnNarrow');
   window.showR2();
 }
 
 function logMouseOut6() {
-  formula6.classList.remove('highlightOn');
-  formula6.classList.add('highlightOff');
+  formula6.classList.remove('highlightOnNarrow');
+  formula6.classList.add('highlightOffNarrow');
   window.hideR2();
 }
 
@@ -821,10 +845,8 @@ Notice that the product of slopes in the right two boxes is equal to the slope i
 # ::::
 
 # :::: d2
-Let's look at some of these quantities in our secants.
-$$h$$
-$$\sin((x + h)^2) - \sin(x^2)$$ 
-$$(x + h)^2 - x^2$$
+Let's look at some of these quantities in our secants $h$, $\sin((x + h)^2) - \sin(x^2)$, and 
+$(x + h)^2 - x^2$.
 [Back](:=t1=true) [Next](:=t3=true)
 # ::::
 
@@ -891,8 +913,8 @@ smartdown.importCssCode(
 .right2 {
   font-size: 18px;
   border: 2px solid gray;
-  background-color: #EEEEFF;
-  border-radius: 25px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
   padding: 20px;
 }
 
