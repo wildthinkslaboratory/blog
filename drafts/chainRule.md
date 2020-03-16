@@ -139,7 +139,7 @@ let secantSlopeText = board1.create('text',[
   0.6 * (xhigh - xlow) + xlow,
   0.85 * 4 - 2,
   function(){ return 'slope1 = '+ secantSlope(); }], 
-  {fontSize:15, visible:true});
+  {fontSize:15, visible:false});
 
 
 let p = board1.create('point', [ 
@@ -168,7 +168,7 @@ let runText = board1.create('text', [
   'h'], {fontSize:12, visible:false});
 
 let triangle = board1.create('polygon', [fx, fx_h, p], {
-  fillColor:'#99DDFF', 
+  fillColor:'#55DDFF', 
   fillOpacity: 50,
   borders: {strokeColor: 'yellow'}, 
   strokeWidth:3, visible:false});
@@ -290,7 +290,7 @@ let secantSlope2 = function() {
 let secantSlopeText2 = board2.create('text',[
   0.6 * (xhigh - xlow) + xlow,
   0.85 * 15 - 4,
-  function(){ return 'slope3 = '+ secantSlope2(); }], {fontSize:15, visible:true});
+  function(){ return 'slope3 = '+ secantSlope2(); }], {fontSize:15, visible:false});
 
 
 let p2 = board2.create('point', [ 
@@ -310,7 +310,7 @@ let run2 = board2.create('segment',
 let riseText2 = board2.create('text', [
   function() { if (x_h2.X() > x2.X()) { return x_h2.X() + 0.1; } 
          return x_h2.X() - 1.5; },
-  function() { return (f2(x_h2.X()) - f2(x2.X()))/2 + f2(x2.X()) + 0.5; },
+  function() { return (f2(x_h2.X()) - f2(x2.X()))/2 + f2(x2.X()) + 1; },
   function() { return '\\[(x+h)^2 - x^2\\]'; }], 
   {fontSize:12, visible:false});
 
@@ -320,7 +320,7 @@ let runText2 = board2.create('text', [
   'h'], {fontSize:12, visible:false});
 
 let triangle2 = board2.create('polygon', [fx2, fx_h2, p2], {
-  fillColor:'#99DDFF', 
+  fillColor:'#55DDFF', 
   fillOpacity: 50,
   borders: {strokeColor: 'yellow'}, 
   strokeWidth:3, visible:false});
@@ -425,7 +425,7 @@ let secantSlope3 = function() {
 let secantSlopeText3 = board3.create('text',[
   0.6 * (f2(xhigh) - xlow) + xlow,
   0.85 * 4 - 2,
-  function(){ return 'slope2 = '+ secantSlope3(); }], {fontSize:15, visible:true});
+  function(){ return 'slope2 = '+ secantSlope3(); }], {fontSize:15, visible:false});
 
 let p3 = board3.create('point', [ 
   function() { return x_h3.X(); }, 
@@ -454,7 +454,7 @@ let runText3 = board3.create('text', [
   {fontSize:12, visible:false});
 
 let triangle3 = board3.create('polygon', [fx3, fx_h3, p3], {
-  fillColor:'#99DDFF', 
+  fillColor:'#55DDFF', 
   fillOpacity: 50,
   borders: {strokeColor: 'yellow'}, 
   strokeWidth:3, visible:false});
@@ -477,27 +477,27 @@ window.triangle3On  = triangle3On;
 
 let h1 = board1.create('segment', 
   [fx, p], 
-  {color:'#99DDFF', strokeWidth:6, visible:false});
+  {color:'#55DDFF', strokeWidth:6, visible:false});
 
 let h2 = board2.create('segment', 
   [fx2, p2], 
-  {color:'#99DDFF', strokeWidth:6, visible:false});
+  {color:'#55DDFF', strokeWidth:6, visible:false});
 
 let r11 = board1.create('segment', 
   [fx_h, p], 
-  {color:'#99DDFF', strokeWidth:6, visible:false});
+  {color:'#55DDFF', strokeWidth:6, visible:false});
 
 let r12 = board3.create('segment', 
   [fx_h3, p3], 
-  {color:'#99DDFF', strokeWidth:6, visible:false});
+  {color:'#55DDFF', strokeWidth:6, visible:false});
 
 let r21 = board3.create('segment', 
   [fx3, p3], 
-  {color:'#99DDFF', strokeWidth:6, visible:false});
+  {color:'#55DDFF', strokeWidth:6, visible:false});
 
 let r22 = board2.create('segment', 
   [fx_h2, p2], 
-  {color:'#99DDFF', strokeWidth:6, visible:false});
+  {color:'#55DDFF', strokeWidth:6, visible:false});
 
 
 let showH = function() {
@@ -553,7 +553,7 @@ let productSlopeText = board1.create('text',[
   0.45 * (xhigh - xlow) + xlow,
   0.8 * 4 - 2,
   function(){ return 'slope2 * slope3 = '+ multSlope(); }], 
-  {fontSize:15, visible:true});
+  {fontSize:15, visible:false});
 
 
 let goClose = function() {
@@ -614,10 +614,10 @@ smartdown.importCssCode(
 `
 
 .highlightOnWide {
-  background-color: #99DDFF;
+  background-color: #55DDFF;
   padding: 16px;
   border-radius: 5px;
-  border: 1px solid #88CCEE;
+  border: 1px solid #66CCEE;
 }
 
 .highlightOffWide {
@@ -628,7 +628,7 @@ smartdown.importCssCode(
 }
 
 .highlightOnNarrow {
-  background-color: #99DDFF;
+  background-color: #55DDFF;
   padding: 6px;
   border-radius: 5px;
   border: 1px solid #88CCEE;
@@ -641,28 +641,25 @@ smartdown.importCssCode(
   border: 1px solid #DDE9EE;
 }
 .outer {
- 
+
 }
 
 .left {
-  xpadding: 2px;
   font-size: 18px; 
 }
 
 .middle {
-  xpadding: 10px;
   font-size: 18px;
 }
 
 .right {
-  xpadding: 10px;
   font-size: 18px;
 }
 
 
 @media (min-width: 800px) {
   .outer {
-   
+      height: 10vh;   
   }
 
   .left {
@@ -756,7 +753,7 @@ function logMouseOut3() {
   triangle2Off();
 }
 
-const formula4 = document.getElementById('MathJax-Element-16-Frame');
+const formula4 = document.getElementById('MathJax-Element-15-Frame');
 formula4.onmouseover = logMouseOver4;
 formula4.onmouseout = logMouseOut4;
 formula4.classList.add('highlightOffNarrow');
@@ -773,7 +770,7 @@ function logMouseOut4() {
   window.hideH();
 }
 
-const formula5 = document.getElementById('MathJax-Element-17-Frame');
+const formula5 = document.getElementById('MathJax-Element-16-Frame');
 formula5.onmouseover = logMouseOver5;
 formula5.onmouseout = logMouseOut5;
 formula5.classList.add('highlightOffNarrow');
@@ -790,7 +787,7 @@ function logMouseOut5() {
   window.hideR1();
 }
 
-const formula6 = document.getElementById('MathJax-Element-18-Frame');
+const formula6 = document.getElementById('MathJax-Element-17-Frame');
 formula6.onmouseover = logMouseOver6;
 formula6.onmouseout = logMouseOut6;
 formula6.classList.add('highlightOffNarrow');
@@ -832,15 +829,14 @@ this.depend = function() {
 
 #### --outlinebox outer2
 #### --outlinebox left2
-See what happens when h gets close to 0.
 [*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true) 
-You can also drag the green dot in the leftmost box. 
+You can also drag the orange dot in the leftmost box. 
 
 [Guided Tour](:=t1=true)
 #### --outlinebox
 #### --outlinebox right2
 # :::: d1
-Notice that the product of slopes in the right two boxes is equal to the slope in the first box. You can drag the green dot in the left most box to change the size of $h$.
+Notice that the product of slopes in the right two boxes is equal to the slope in the first box. 
 [Close](::d1) [Next](:=t2=true)
 # ::::
 
