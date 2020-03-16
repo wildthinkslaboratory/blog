@@ -1,21 +1,28 @@
 ---
 layout: post
-title: Draft Title
-date: 2020-01-01
+title: "More Layout Experimentation: Chain Rule"
+date: 2020-03-14
 smartdown: true
 comments: false
 ---
 
+This post is a continuation of previous posts on [calculus and layouts](https://wildthinkslaboratory.github.io/smartblog/2020/03/03/Layout.html).  I'm using some three panel layouts as well as some two panel layouts and I'm still experimenting with my highlighting tool to help map notational statements with their meaining in the model.  The topic this week is the **chain rule**.
+
+When we first learn the chain rule in calculus class, the teacher presents a proof of the rule.  Often we memorize the rule and promptly forget the proof.  The goal of this exploration is to provide visual intuition for the chain rule. It's not a full proof because we look at a specific example.  It does follow the main proof and we discuss the main subtlety that occurs in the proof.  I hope the result is a proof sketch that people will remember in addition to remembering how to apply the rule.
+
+
 ### The Chain Rule
+So you know what the chain rule is and you know how to use it, but why does it work? We're going to work through an example and build some intuition.
+
 # --outlinebox problem
 **Problem:**
 Find the derivative of $f(x) = \sin(x^2)$. 
 # --outlinebox
-To find the derivative of $f$ we can use the definition of the derivative
-$$f'(x)  =  \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}$$
-Now we plug in the definition of our particular function $f$ to get
+We know that the function $f$ can be viewed as the composition of the two functions $g(x) = \sin(x)$ and $k(x) = x^2$, and we know how to take the derivative of both of these functions and apply the chain rule.  But instead let's go back and try using the definition of the derivative
+$$f'(x)  =  \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}.$$
+For our particular function $f(x) = \sin(x^2)$, that means
 $$f'(x) = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
-Unfortunately, it's not obvious how to evaluate this limit.  What happens as $h$ gets very small? Fortunately, there is another way.  We can use the chain rule.  Notice that the function $f$ can be viewed as the composition of the two functions $g(x) = \sin(x)$ and $k(x) = x^2$, and we know how to take the derivative of both of these functions.  Let's go back to our definition of the derivative and do some algebra on it.
+Unfortunately, it's not obvious how to evaluate this limit.  What happens as $h$ gets very small? So we do some algebra on our limit.
 $$
 \begin{align}
 f'(x) & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}  & \text{definition of derivative} \newline
@@ -23,12 +30,12 @@ f'(x) & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}  & \text{definitio
 & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{(x+h)^2 - x^2} \cdot \frac{(x+h)^2 - x^2}{h}  & \text{assoc. prop. of multiplication}
 \end{align}
 $$
-Now we have a limit that we can work with. So we've taken the normal expression of the secant line
+Now we have a limit that we can work with. We've taken the normal expression for the secant line
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
-that we find in the definition of the derivative and expressed it as the product of two new secant lines
+and expressed it as the product of two new secant lines
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{(x+h)^2 - x^2} \cdot \frac{(x+h)^2 - x^2}{h} $$
-Let's take a look at these secant lines to see what's going on.
-```javascript /playable/autoplay
+Let's take a look at these three secant lines to see what's going on.
+```javascript /autoplay
 //smartdown.import=https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.7/jsxgraphcore.js
 
 smartdown.importCssUrl('https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.7/jsxgraph.css');
@@ -578,33 +585,20 @@ this.sizeChanged();
 
 #### --outlinebox left1
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
-
-This is the standard secant line from the definition of the derivative that we don't know how to solve. Let's look at some of these quantities in our secants.  
-$$h$$
-$$\sin((x + h)^2) - \sin(x^2)$$
-$$(x + h)^2 - x^2$$
 #### --outlinebox
 
 #### --outlinebox middle1
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2}$$
-This is a secant line on the graph of $g(x) = \sin(x)$, but the change in the $x$ value is different here.  Instead of changing by $h$, it changes by $(x + h)^2 - x^2$.
 #### --outlinebox
 
 #### --outlinebox right1
 $$\frac{(x + h)^2 - x^2}{h} $$
-This is the secant line on the graph of $k(x) = x^2$. Notice that the product of slopes in the right two boxes is equal to the slope in the first box. Let's see what happens when we take the limit.
-[*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true) 
-[Notes](::dragGreen/tooltip)
-# :::: dragGreen
-You can also drag the green dot in the leftmost box.
-# ::::
 #### --outlinebox
 #### --outlinebox
 
-The good news is that we know how to evaluate the limits in the right two boxes.  As $h$ goes to $0$, we know the expression
-$$\lim_{h \to 0}\frac{(x + h)^2 - x^2}{h} = 2x$$
-Let's take a look at the expression 
-$$\lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2}$$
+
+
+
 
 ```javascript /autoplay
 
@@ -627,17 +621,17 @@ smartdown.importCssCode(
 }
 
 .left {
-  padding: 10px;
+  xpadding: 2px;
   font-size: 18px; 
 }
 
 .middle {
-  padding: 10px;
+  xpadding: 10px;
   font-size: 18px;
 }
 
 .right {
-  padding: 10px;
+  xpadding: 10px;
   font-size: 18px;
 }
 
@@ -668,6 +662,7 @@ smartdown.importCssCode(
 `);
 
 
+// grab the three caption divs and change their css
 const outer = document.getElementById('outer1');
 const left = document.getElementById('left1');
 const middle = document.getElementById('middle1');
@@ -683,7 +678,10 @@ left.classList.add('left');
 middle.classList.add('left');
 right.classList.add('right');
 
-const formula1 = document.getElementById('MathJax-Element-13-Frame');
+
+// set up highlight mapping for formulas.  connect them with their
+// model highlight
+const formula1 = document.getElementById('MathJax-Element-12-Frame');
 formula1.onmouseover = logMouseOver;
 formula1.onmouseout = logMouseOut;
 formula1.classList.add('highlightOff');
@@ -700,7 +698,7 @@ function logMouseOut() {
   triangleOff();
 }
 
-const formula2 = document.getElementById('MathJax-Element-17-Frame');
+const formula2 = document.getElementById('MathJax-Element-13-Frame');
 formula2.onmouseover = logMouseOver2;
 formula2.onmouseout = logMouseOut2;
 formula2.classList.add('highlightOff');
@@ -717,7 +715,7 @@ function logMouseOut2() {
   triangle3Off();
 }
 
-const formula3 = document.getElementById('MathJax-Element-22-Frame');
+const formula3 = document.getElementById('MathJax-Element-14-Frame');
 formula3.onmouseover = logMouseOver3;
 formula3.onmouseout = logMouseOut3;
 formula3.classList.add('highlightOff');
@@ -734,7 +732,7 @@ function logMouseOut3() {
   triangle2Off();
 }
 
-const formula4 = document.getElementById('MathJax-Element-14-Frame');
+const formula4 = document.getElementById('MathJax-Element-16-Frame');
 formula4.onmouseover = logMouseOver4;
 formula4.onmouseout = logMouseOut4;
 formula4.classList.add('highlightOff');
@@ -751,7 +749,7 @@ function logMouseOut4() {
   window.hideH();
 }
 
-const formula5 = document.getElementById('MathJax-Element-15-Frame');
+const formula5 = document.getElementById('MathJax-Element-17-Frame');
 formula5.onmouseover = logMouseOver5;
 formula5.onmouseout = logMouseOut5;
 formula5.classList.add('highlightOff');
@@ -768,7 +766,7 @@ function logMouseOut5() {
   window.hideR1();
 }
 
-const formula6 = document.getElementById('MathJax-Element-16-Frame');
+const formula6 = document.getElementById('MathJax-Element-18-Frame');
 formula6.onmouseover = logMouseOver6;
 formula6.onmouseout = logMouseOut6;
 formula6.classList.add('highlightOff');
@@ -785,6 +783,8 @@ function logMouseOut6() {
   window.hideR2();
 }
 
+
+// code for the limit buttons
 smartdown.setVariable('close', false);
 smartdown.setVariable('gotozero', false);
 smartdown.setVariable('reset', false);
@@ -806,6 +806,196 @@ this.depend = function() {
 };
 ```
 
+#### --outlinebox outer2
+#### --outlinebox left2
+See what happens when h gets close to 0.
+[*h* close to 0](:=close=true) [*h* all the way to 0](:=gotozero=true) [Reset](:=reset=true) 
+You can also drag the green dot in the leftmost box. 
 
+[Guided Tour](:=t1=true)
+#### --outlinebox
+#### --outlinebox right2
+# :::: d1
+Notice that the product of slopes in the right two boxes is equal to the slope in the first box. You can drag the green dot in the left most box to change the size of $h$.
+[Close](::d1) [Next](:=t2=true)
+# ::::
+
+# :::: d2
+Let's look at some of these quantities in our secants.
+$$h$$
+$$\sin((x + h)^2) - \sin(x^2)$$ 
+$$(x + h)^2 - x^2$$
+[Back](:=t1=true) [Next](:=t3=true)
+# ::::
+
+# :::: d3
+In the right most box, as $h$ goes to $0$, we know the expression
+$$\lim_{h \to 0}\frac{(x + h)^2 - x^2}{h} = 2x$$
+[Back](:=t2=true) [Next](:=t4=true)
+# ::::
+
+# :::: d4
+In the middle box, as $h$ goes to $0$ the secant gets close to a tangent line on the function $g(x) = \sin(x)$ evaluated at $x^2$
+$$\lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2} = \cos(x^2)$$
+[Back](:=t3=true) [Next](:=t5=true)
+# ::::
+
+# :::: d5
+When $h=0$ all secants are undefined.  But this is ok.  We're taking the limit so we only care about $h$ close to $0$.
+[Back](:=t4=true) [Next](:=t6=true)
+# ::::
+
+# :::: d6
+One small problem, the value of $(x+h)^2 - x^2$ could be zero in other places then $h=0$.  For example, if $x=1$ and $h=-2$ the secant is undefined. We need a delta epsilon argument to deal with this.  [See argument]()
+[Back](:=t5=true) [Next](:=t7=true)
+# ::::
+
+# :::: d7
+$$f'(x) = \cos(x^2) \cdot 2x$$
+[Back](:=t6=true) [Close](::d7)
+# ::::
+
+#### --outlinebox
+#### --outlinebox
+
+
+# :::: secant1
+This is the standard secant line from the definition of the derivative that we don't know how to solve. 
+# ::::
+
+# :::: secant2
+This is a secant line on the graph of $g(x) = \sin(x)$, but the change in the $x$ value is different here. Instead of changing by $h$, it changes by $(x + h)^2 - x^2$.
+# ::::
+
+# :::: secant3
+This is the secant line on the graph of $k(x) = x^2$. 
+# ::::
+
+
+
+
+
+```javascript /autoplay
+
+smartdown.importCssCode(
+`
+.outer2 {
+  height: 25vh;
+}
+
+.left2 {
+  padding: 10px; 
+  font-size: 18px;
+}
+
+.right2 {
+  font-size: 18px;
+  border: 2px solid gray;
+  background-color: #EEEEFF;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+
+@media (min-width: 800px) {
+  .outer2 {
+   
+  }
+
+  .left2 {
+    width: 30%;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .right2 {
+    width: 68%;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top; 
+    overflow: scroll;
+  }
+}
+`);
+
+
+const outer = document.getElementById('outer2');
+const left = document.getElementById('left2');
+const right = document.getElementById('right2');
+
+outer.classList.remove('decoration-outlinebox');
+left.classList.remove('decoration-outlinebox');
+right.classList.remove('decoration-outlinebox');
+
+outer.classList.add('outer2');
+left.classList.add('left2');
+right.classList.add('right2');
+
+
+```
+
+
+```javascript /autoplay
+// these are the transitions for the guided tour
+
+smartdown.setVariable('t1', false);
+smartdown.setVariable('t2', false);
+smartdown.setVariable('t3', false);
+smartdown.setVariable('t4', false);
+smartdown.setVariable('t5', false);
+smartdown.setVariable('t6', false);
+smartdown.setVariable('t7', false);
+
+
+this.dependOn = ['t1', 't2', 't3', 't4', 't5', 't6', 't7'];
+this.depend = function() {
+  if (env.t1 == true) {
+    console.log('t1 is true');
+    smartdown.setVariable('t1',false);
+    smartdown.showDisclosure('d1', '', 'transparent');
+    smartdown.hideDisclosure('d2', '', 'transparent');
+    smartdown.hideDisclosure('d3', '', 'transparent');
+    smartdown.hideDisclosure('d4', '', 'transparent');
+    smartdown.setVariable('t1',false);
+  }
+  if (env.t2 == true) {
+    smartdown.setVariable('t2', false);
+    smartdown.showDisclosure('d2', '', 'transparent');
+    smartdown.hideDisclosure('d1', '', 'transparent');  
+    smartdown.hideDisclosure('d3', '', 'transparent');  
+  }
+  if (env.t3 == true) {
+    smartdown.setVariable('t3', false);
+    smartdown.showDisclosure('d3', '', 'transparent');
+    smartdown.hideDisclosure('d2', '', 'transparent');  
+    smartdown.hideDisclosure('d4', '', 'transparent');  
+  }
+  if (env.t4 == true) {
+    smartdown.setVariable('t4', false);
+    smartdown.showDisclosure('d4', '', 'transparent');
+    smartdown.hideDisclosure('d3', '', 'transparent');  
+    smartdown.hideDisclosure('d5', '', 'transparent');  
+  }
+  if (env.t5 == true) {
+    smartdown.setVariable('t5', false);
+    smartdown.showDisclosure('d5', '', 'transparent');
+    smartdown.hideDisclosure('d4', '', 'transparent');  
+    smartdown.hideDisclosure('d6', '', 'transparent');  
+  }
+  if (env.t6 == true) {
+    smartdown.setVariable('t6', false);
+    smartdown.showDisclosure('d6', '', 'transparent');
+    smartdown.hideDisclosure('d5', '', '');  
+    smartdown.hideDisclosure('d7', '', '');  
+  }
+  if (env.t7 == true) {
+    smartdown.setVariable('t7', false);
+    smartdown.showDisclosure('d7', '', 'transparent');
+    smartdown.hideDisclosure('d6', '', '');  
+  }
+};
+ 
+```
 
 
