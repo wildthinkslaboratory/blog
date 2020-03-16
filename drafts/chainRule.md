@@ -132,15 +132,15 @@ let segment = board1.create('segment', [fx, fx_h], {color:'#666688', strokeWidth
 
 let secantSlope = function() { 
   if (x.X() == x_h.X()) { return "undef"; }
-  return ((f(x.X()) - f(x_h.X()))/(x.X() - x_h.X())).toFixed(3).toString(); 
+  return ((f(x.X()) - f(x_h.X()))/(x.X() - x_h.X())).toFixed(2).toString(); 
 }
 
-let secantSlopeText = board1.create('text',[
-  0.6 * (xhigh - xlow) + xlow,
-  0.85 * 4 - 2,
-  function(){ return 'slope1 = '+ secantSlope(); }], 
-  {fontSize:15, visible:false});
 
+let secantSlopeText = board1.create('text',[
+  function() { return x.X() + (x_h.X() - x.X())/2 - 0.9; },
+  function() { return (f(x_h.X()) - f(x.X()))/2 + f(x.X()) - 0.1; },
+  function(){ return 'slope = '+ secantSlope(); }], 
+  {fontSize:12, visible:true});
 
 let p = board1.create('point', [ 
   function() { return x_h.X(); }, 
@@ -284,13 +284,15 @@ let segment2 = board2.create('segment', [fx2, fx_h2], {color:'#666688', strokeWi
 
 let secantSlope2 = function() { 
   if (x2.X() == x_h2.X()) { return "undef"; }
-  return ((f2(x2.X()) - f2(x_h2.X()))/(x2.X() - x_h2.X())).toFixed(3).toString(); 
+  return ((f2(x2.X()) - f2(x_h2.X()))/(x2.X() - x_h2.X())).toFixed(2).toString(); 
 }
 
+
 let secantSlopeText2 = board2.create('text',[
-  0.6 * (xhigh - xlow) + xlow,
-  0.85 * 15 - 4,
-  function(){ return 'slope3 = '+ secantSlope2(); }], {fontSize:15, visible:false});
+  function() { return x2.X() + (x_h2.X() - x2.X())/2 - 0.9; },
+  function() { return (f2(x_h2.X()) - f2(x2.X()))/2 + f2(x2.X()); },
+  function(){ return 'slope = '+ secantSlope2(); }], 
+  {fontSize:12, visible:true});
 
 
 let p2 = board2.create('point', [ 
@@ -348,7 +350,7 @@ window.triangle2On  = triangle2On;
 //////////////////////////////////////////////////////////////////////////////////
 
 
-board3 = JXG.JSXGraph.initBoard('middleCR', {boundingbox:[xlow,2,f2(xhigh),-2], showCopyright:false, keepaspectratio:false, axis:false});
+board3 = JXG.JSXGraph.initBoard('middleCR', {boundingbox:[xlow - 1,2,f2(xhigh),-2], showCopyright:false, keepaspectratio:false, axis:false});
 board1.addChild(board3);
 
 ///////////////////////////////////////////////////////    axes
@@ -401,7 +403,7 @@ let x3 = board3.create('point', [f2(x.X()),0], { name:'\\[x^2\\]', color:'#66668
 let fx3 = board3.create('point', [
   function() { return x3.X(); }, 
   function() { return f3(x3.X()); }], {name:'', color:'#666688', fixed:true});
-let graph_f3 = board3.create('functiongraph', [f3,xlow,f2(xhigh)], {strokeColor:'#BBBBBB'});
+let graph_f3 = board3.create('functiongraph', [f3,xlow-1,f2(xhigh)], {strokeColor:'#BBBBBB'});
 
 let x_h3 = board3.create('point', [
 	function() { return f2(x_h.X()); }, 
@@ -419,13 +421,16 @@ let segment3 = board3.create('segment', [fx3, fx_h3], {color:'#666688', strokeWi
 
 let secantSlope3 = function() { 
   if (x3.X() == x_h3.X()) { return "undef"; }
-  return ((f3(x3.X()) - f3(x_h3.X()))/(x3.X() - x_h3.X())).toFixed(3).toString(); 
+  return ((f3(x3.X()) - f3(x_h3.X()))/(x3.X() - x_h3.X())).toFixed(2).toString(); 
 }
 
+
 let secantSlopeText3 = board3.create('text',[
-  0.6 * (f2(xhigh) - xlow) + xlow,
-  0.85 * 4 - 2,
-  function(){ return 'slope2 = '+ secantSlope3(); }], {fontSize:15, visible:false});
+  function() { return x3.X() + (x_h3.X() - x3.X())/2 - 3; },
+  function() { return (f3(x_h3.X()) - f3(x3.X()))/2 + f3(x3.X()) - 0.1; },
+  function(){ return 'slope = '+ secantSlope3(); }], 
+  {fontSize:12, visible:true});
+
 
 let p3 = board3.create('point', [ 
   function() { return x_h3.X(); }, 
@@ -546,7 +551,7 @@ let multSlope = function() {
   if (x3.X() == x_h3.X()) { return "undef"; }
   const s2 = ((f2(x2.X()) - f2(x_h2.X()))/(x2.X() - x_h2.X()));
   const s3 = ((f3(x3.X()) - f3(x_h3.X()))/(x3.X() - x_h3.X()));
-  return (s2 * s3).toFixed(3).toString(); 
+  return (s2 * s3).toFixed(2).toString(); 
 }
 
 let productSlopeText = board1.create('text',[
@@ -571,6 +576,7 @@ let goToZero = function() {
 
 let resetSecant = function() {
   x_h.moveTo([x.X() + start_x_h, 0]);
+  board1.update();
 };
 
 window.goClose = goClose;
@@ -585,6 +591,12 @@ this.sizeChanged = function() {
 };
 
 this.sizeChanged();
+
+smartdown.setVariable('slopeProduct', multSlope());
+
+board1.on('update', function() {
+  smartdown.setVariable('slopeProduct', multSlope());
+});
 
 ```
 
@@ -629,14 +641,14 @@ smartdown.importCssCode(
 
 .highlightOnNarrow {
   background-color: #55DDFF;
-  padding: 6px;
+  padding: 2px 6px;
   border-radius: 5px;
   border: 1px solid #88CCEE;
 }
 
 .highlightOffNarrow {
   background-color: #EEF9FF;
-  padding: 6px;
+  padding: 2px 6px;
   border-radius: 5px;
   border: 1px solid #DDE9EE;
 }
@@ -835,40 +847,44 @@ You can also drag the orange dot in the leftmost box.
 [Guided Tour](:=t1=true)
 #### --outlinebox
 #### --outlinebox right2
+
 # :::: d1
-Notice that the product of slopes in the right two boxes is equal to the slope in the first box. 
+Let's look at some of these quantities in our secants $h$, $\sin((x + h)^2) - \sin(x^2)$, and $(x + h)^2 - x^2$.
 [Close](::d1) [Next](:=t2=true)
 # ::::
 
 # :::: d2
-Let's look at some of these quantities in our secants $h$, $\sin((x + h)^2) - \sin(x^2)$, and 
-$(x + h)^2 - x^2$.
+Notice that the product of slopes in the right two boxes is equal to the slope in the first box. 
+[slope2 * slope3](:!slopeProduct)
 [Back](:=t1=true) [Next](:=t3=true)
 # ::::
 
+
+
 # :::: d3
-In the right most box, as $h$ goes to $0$, we know the expression
+In the right most box, as $h$ goes to $0$, we know how to evaluate this limit. It's the derivative of $k(x) = x^2$.
 $$\lim_{h \to 0}\frac{(x + h)^2 - x^2}{h} = 2x$$
 [Back](:=t2=true) [Next](:=t4=true)
 # ::::
 
 # :::: d4
-In the middle box, as $h$ goes to $0$ the secant gets close to a tangent line on the function $g(x) = \sin(x)$ evaluated at $x^2$
+In the middle box, as $h$ goes to $0$ the secant gets close to a tangent line on the function $g(x) = \sin(x)$, but it's evaluated at $x^2$, not $x$. The derivative of the $\sin$ is the $\cos$ so we have
 $$\lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{(x + h)^2 - x^2} = \cos(x^2)$$
 [Back](:=t3=true) [Next](:=t5=true)
 # ::::
 
 # :::: d5
-When $h=0$ all secants are undefined.  But this is ok.  We're taking the limit so we only care about $h$ close to $0$.
+When $h=0$ the slopes are all are undefined.  But this is ok.  We're taking the limit so we only care about what happens when $h$ close to $0$.
 [Back](:=t4=true) [Next](:=t6=true)
 # ::::
 
 # :::: d6
-One small problem, the value of $(x+h)^2 - x^2$ could be zero in other places then $h=0$.  For example, if $x=1$ and $h=-2$ the secant is undefined. We need a delta epsilon argument to deal with this.  [See argument]()
+But there is a problem. The value of $(x+h)^2 - x^2$ could be zero in other places then $h=0$.  For example, if $x=1$ and $h=-2$ the slope of this secant is undefined. This can be solved with a delta epsilon argument.  [See argument](https://en.wikipedia.org/wiki/Chain_rule#First_proof)
 [Back](:=t5=true) [Next](:=t7=true)
 # ::::
 
 # :::: d7
+We can conclude that the derivative of our function $f(x) = \sin(x^2)$ is 
 $$f'(x) = \cos(x^2) \cdot 2x$$
 [Back](:=t6=true) [Close](::d7)
 # ::::
