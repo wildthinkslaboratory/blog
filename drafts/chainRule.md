@@ -1,15 +1,14 @@
 ---
 layout: post
-title: "More Layout Experimentation: Chain Rule"
-date: 2020-03-14
+title: "Layout Experiment with the Chain Rule"
+date: 2020-03-16
 smartdown: true
 comments: false
+background: '/img/posts/Calculation_feeldesain_11.jpg'
+categories: [ calculus, smartdown ]
 ---
 
-This post is a continuation of previous posts on [calculus and layouts](https://wildthinkslaboratory.github.io/smartblog/2020/03/03/Layout.html).  I'm using some three panel layouts as well as some two panel layouts and I'm still experimenting with my highlighting tool to help map notational statements with their meaining in the model.  The topic this week is the **chain rule**.
-
-When we first learn the chain rule in calculus class, the teacher presents a proof of the rule.  Often we memorize the rule and promptly forget the proof.  The goal of this exploration is to provide visual intuition for the chain rule. It's not a full proof because we look at a specific example.  It does follow the main proof and we discuss the main subtlety that occurs in the proof.  I hope the result is a proof sketch that people will remember in addition to remembering how to apply the rule.
-
+This post is a continuation of previous posts on [calculus and layouts](https://wildthinkslaboratory.github.io/smartblog/2020/03/03/Layout.html). The topic this week is the **chain rule**.  I've worked on the color scheme a bit.  Don't forget to mouse over the blue background formulas to see the mapping between the formulas and the model.
 
 ### The Chain Rule
 So you know what the chain rule is and you know how to use it, but why does it work? We're going to work through an example and build some intuition.
@@ -22,7 +21,7 @@ We know that the function $f$ can be viewed as the composition of the two functi
 $$f'(x)  =  \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}.$$
 For our particular function $f(x) = \sin(x^2)$, that means
 $$f'(x) = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
-Unfortunately, it's not obvious how to evaluate this limit.  What happens as $h$ gets very small? So we do some algebra on our limit.
+How do we evaluate this limit?  What happens as $h$ gets very small? Next, we do some algebra on our limit.
 $$
 \begin{align}
 f'(x) & = \lim_{h \to 0}\frac{\sin((x + h)^2) - \sin(x^2)}{h}  & \text{definition of derivative} \newline
@@ -34,7 +33,7 @@ Now we have a limit that we can work with. We've taken the normal expression for
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{h}$$
 and expressed it as the product of two new secant lines
 $$\frac{\sin((x + h)^2) - \sin(x^2)}{(x+h)^2 - x^2} \cdot \frac{(x+h)^2 - x^2}{h} $$
-Let's take a look at these three secant lines to see what's going on.
+Let's take a look at each of these three secant lines to see what's going on.
 ```javascript /autoplay
 //smartdown.import=https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.7/jsxgraphcore.js
 
