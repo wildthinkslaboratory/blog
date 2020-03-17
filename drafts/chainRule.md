@@ -853,7 +853,7 @@ Let's look at some of these quantities in our secants $h$, $\sin((x + h)^2) - \s
 # ::::
 
 # :::: d2
-Notice that the product of slopes in the right two boxes is equal to the slope in the first box. 
+Notice that the product of slopes in the right two boxes is equal to the slope in the first box. Try dragging the orange dot in the first box to see different values.
 [slope2 * slope3](:!slopeProduct)
 [Back](:=t1=true) [Next](:=t3=true)
 # ::::
