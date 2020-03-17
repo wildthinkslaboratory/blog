@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Layout Experiment with the Chain Rule"
-date: 2020-03-16
+date: 2020-03-17
 smartdown: true
-comments: false
+comments: true
 background: '/img/posts/Calculation_feeldesain_11.jpg'
 categories: [ calculus, smartdown ]
 ---
