@@ -3,3 +3,24 @@
 ---
 
 @import "styles";
+
+header.masthead {
+	background-color: transparent;
+	.canvas_header {
+		
+	}
+}
+
+.large-header {
+	position: relative;
+	display: block;
+	width: 100%;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center center;
+	z-index: -1;
+}
+
+.demo-1 .large-header {
+	background-image: url('../img/demo-1-bg.jpg');
+}
