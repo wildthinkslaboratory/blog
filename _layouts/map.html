@@ -19,15 +19,12 @@ layout: default
     </div>
   </header> -->
  
-    <header class="masthead">
-      <div class="overlay"></div>
-      <div class="canvas_header">
-        <div id="large-header" class="large-header">
+    <header id="myHeader" class="mapHeader">
+      <div id="headerOverlay" class="myOverlay"></div>
+      <div id="canvasWrapper" class="ca">
           <canvas id="fractal-canvas"></canvas>
-          <!-- <h1 class="main-title">Connect <span class="thin">Three</span></h1> -->
-        </div>
       </div>
-
+      <h1 class="main-title">{{ page.title }}</h1>
     </header><!-- /container -->
 
     <script src="assets/fractal.js"></script>

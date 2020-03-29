@@ -3,11 +3,12 @@
 
 
 // Get the canvas and context
+let headerDiv = document.getElementById("headerOverlay"); 
 let canvas = document.getElementById("fractal-canvas"); 
 let context = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight * 0.3;
+canvas.width  = headerDiv.offsetWidth;
+canvas.height = headerDiv.offsetHeight;
 
 let juliaSeeds = [ [-0.391,-0.587], [-0.4,-0.59], [-0.54, 0.54], [0.355, 0.355], [0.37, 0.1], [0, 0.8], [0.34, -0.05], [-0.54, 0.54], [0.355, 0.355], [0.37, 0.1],
 [ -0.23697092928656072, 0.7419121059594294],
@@ -21,7 +22,7 @@ let juliaSeeds = [ [-0.391,-0.587], [-0.4,-0.59], [-0.54, 0.54], [0.355, 0.355],
 ];
 
 // The maximum number of iterations per pixel
-let maxiterations = 300;
+let maxiterations = 255;
 
 
 
@@ -40,16 +41,19 @@ function generatePalette() {
         if (i < 85) {
             boffset += 3;
         } else if (i<170) {
-            goffset += 3;
-            roffset += 3;
+            roffset += 2;
+            goffset += 2;
         } else  {
-            boffset -= 3;
+            roffset += 1;
+            goffset += 1;
         }
     }
 }
 
 generatePalette();
 
+let [seedA, seedB] = juliaSeeds[Math.floor(Math.random() * juliaSeeds.length)];
+let zoom = 300 + Math.floor(Math.random() * 300);
 
 // Generate the fractal image
 function generateImage() {
@@ -59,9 +63,7 @@ function generateImage() {
   let offsety = -canvas.height/2;
   let panx = -100;
   let pany = 0;
-  let zoom = 300 + Math.floor(Math.random() * 300);
-
-  let [seedA, seedB] = juliaSeeds[Math.floor(Math.random() * juliaSeeds.length)];
+ 
   // let seedA = Math.random() * 2 - 1;
   // let seedB = Math.random() * 2 - 1;
   // console.log(seedA,seedB);
@@ -170,6 +172,12 @@ function draw() {
 }
 
 draw();
+
+window.addEventListener('resize', function(event){
+  canvas.width  = headerDiv.offsetWidth;
+  canvas.height = headerDiv.offsetHeight;
+  draw();
+});
 
 
 })();
